@@ -848,7 +848,7 @@
       <h3>Verificación de identidad</h3>
       <p>Onboarding con foto del DPI. Google Vision API verifica el documento automáticamente. Solo vecinos reales en tu plataforma.</p>
     </div>
-    <div class="feature-card fade-up">
+    <div class="feature-card fade-up" onclick="openModal('invitacion')">
       <div class="feature-icon">🔗</div>
       <h3>Invitación por link</h3>
       <p>La junta genera un link único. Los residentes se registran solos. Sin formularios manuales, sin imports de Excel.</p>
@@ -1981,6 +1981,84 @@
             </div>
           </div>
 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── INVITACION MODAL ── -->
+<style>
+  .inv-body { padding: 20px 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100%; }
+  .inv-card { background: #1e1f1c; border: 1px solid #2a2b28; border-radius: 14px; padding: 18px 14px; width: 100%; }
+  .inv-logo { font-family: 'Fraunces', serif; color: #a3d5d0; font-size: 16px; font-weight: 400; text-align: center; margin-bottom: 14px; letter-spacing: -0.02em; }
+  .inv-community-badge { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 14px; }
+  .inv-community-dot { width: 28px; height: 28px; border-radius: 8px; background: rgba(163,213,208,0.1); border: 1px solid rgba(163,213,208,0.2); display: flex; align-items: center; justify-content: center; }
+  .inv-community-dot svg { width: 14px; height: 14px; stroke: #a3d5d0; fill: none; stroke-width: 1.8; }
+  .inv-community-name { color: #f2f0eb; font-size: 10px; font-weight: 600; }
+  .inv-divider { height: 1px; background: #2a2b28; margin-bottom: 14px; }
+  .inv-heading { color: #f2f0eb; font-size: 12px; font-weight: 700; text-align: center; line-height: 1.4; margin-bottom: 6px; }
+  .inv-sub { color: #8a8b85; font-size: 8.5px; text-align: center; line-height: 1.5; margin-bottom: 14px; }
+  .inv-link-pill { background: rgba(163,213,208,0.08); border: 1px solid rgba(163,213,208,0.2); border-radius: 8px; padding: 7px 10px; display: flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+  .inv-link-pill svg { width: 10px; height: 10px; stroke: #a3d5d0; fill: none; stroke-width: 2; flex-shrink: 0; }
+  .inv-link-text { color: #a3d5d0; font-size: 8px; font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .inv-btn-primary { width: 100%; background: #a3d5d0; color: #0d1f1e; font-size: 9px; font-weight: 700; padding: 8px; border-radius: 8px; text-align: center; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+  .inv-btn-primary svg { width: 11px; height: 11px; }
+  .inv-btn-outline { width: 100%; background: transparent; border: 1px solid #2a2b28; color: #f2f0eb; font-size: 9px; font-weight: 500; padding: 8px; border-radius: 8px; text-align: center; margin-bottom: 14px; }
+  .inv-footer { color: #8a8b85; font-size: 7.5px; text-align: center; line-height: 1.5; }
+  .inv-footer strong { color: #f2f0eb; font-weight: 500; }
+</style>
+
+<div class="fmodal-overlay" id="modal-invitacion" onclick="handleOverlayClick(event, 'invitacion')">
+  <div class="fmodal">
+    <button class="fmodal-close" onclick="closeModal('invitacion')">✕</button>
+
+    <div class="fmodal-info">
+      <div class="feature-icon">🔗</div>
+      <h2>Invitación por link</h2>
+      <p>La junta genera un link único para su comunidad. Los residentes lo reciben por WhatsApp, lo abren, y se registran solos — sin que la junta tenga que hacer nada más.</p>
+      <ul class="fmodal-points">
+        <li>La junta genera el link desde el directorio con un clic</li>
+        <li>El link lleva al residente directo a la pantalla de registro</li>
+        <li>Registro con Google o correo — sin formularios manuales</li>
+        <li>El sistema verifica el DPI automáticamente al registrarse</li>
+        <li>Sin imports de Excel, sin listas, sin trabajo extra para la junta</li>
+      </ul>
+    </div>
+
+    <div class="fmodal-preview">
+      <div class="phone-frame" style="width:240px;flex-shrink:0;">
+        <div class="inv-body">
+          <div class="inv-card">
+            <div class="inv-logo">domo</div>
+
+            <div class="inv-community-badge">
+              <div class="inv-community-dot">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <span class="inv-community-name">Residencial Bosque Verde</span>
+            </div>
+
+            <div class="inv-divider"></div>
+
+            <div class="inv-heading">¡Has sido invitado a unirte a tu comunidad!</div>
+            <div class="inv-sub">Carlos Pérez te invita a registrarte en el portal de Residencial Bosque Verde. Solo toma un minuto.</div>
+
+            <div class="inv-link-pill">
+              <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              <span class="inv-link-text">domogt.app/unirse/bv·f8c2a1</span>
+            </div>
+
+            <div class="inv-btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0d1f1e" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              Unirse con Google
+            </div>
+            <div class="inv-btn-outline">Crear cuenta con correo</div>
+
+            <div class="inv-footer">
+              Invitado por <strong>Carlos Pérez</strong><br>Junta Directiva · Residencial Bosque Verde
+            </div>
+          </div>
         </div>
       </div>
     </div>
