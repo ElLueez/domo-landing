@@ -816,7 +816,7 @@
       <h3>Muro de anuncios</h3>
       <p>Publica comunicados, eventos y encuestas. Los residentes votan, comentan y se mantienen informados. Todo queda registrado.</p>
     </div>
-    <div class="feature-card fade-up">
+    <div class="feature-card fade-up" onclick="openModal('tickets')">
       <div class="feature-icon">🎟</div>
       <h3>Sistema de tickets</h3>
       <p>Quejas, mantenimiento, consultas y seguridad. La junta gestiona con un tablero Kanban. Nada se pierde.</p>
@@ -1209,6 +1209,109 @@
                 <span class="muro-vote-count">1 voto</span>
                 <span class="muro-pct">25%</span>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TICKETS MODAL ── -->
+<style>
+  .tk-body { padding: 14px 12px; }
+  .tk-title { color: #f2f0eb; font-size: 17px; font-weight: 700; text-align: center; margin-bottom: 12px; }
+  .tk-filters { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .tk-filter-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px; height: 32px; border: 1px solid #2a2b28; border-radius: 8px; color: #8a8b85; font-size: 9px; background: transparent; }
+  .tk-filter-btn svg { width: 11px; height: 11px; stroke: #8a8b85; fill: none; stroke-width: 1.8; }
+  .tk-filter-btn .tk-chevron { width: 9px; height: 9px; }
+  .tk-add-btn { width: 32px; height: 32px; border-radius: 50%; background: #a3d5d0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .tk-add-btn svg { width: 14px; height: 14px; stroke: #0d1f1e; fill: none; stroke-width: 2.5; }
+  .tk-col-label { color: #f2f0eb; font-size: 11px; font-weight: 600; margin-bottom: 5px; }
+  .tk-segments { display: flex; gap: 2px; margin-bottom: 10px; }
+  .tk-seg { flex: 1; height: 3px; border-radius: 2px; background: rgba(163,213,208,0.2); }
+  .tk-seg.active { background: #a3d5d0; height: 4px; margin-top: -1px; }
+  .tk-card { background: #1e1f1c; border: 1px solid #2a2b28; border-left: 3px solid #e05252; border-radius: 8px; padding: 10px; margin-bottom: 7px; }
+  .tk-card-normal { border-left-color: #2a2b28; }
+  .tk-card-top { display: flex; align-items: center; gap: 5px; margin-bottom: 4px; }
+  .tk-category { color: #8a8b85; font-size: 7.5px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; }
+  .tk-priority-badge { font-size: 7.5px; font-weight: 600; padding: 1px 6px; border-radius: 10px; background: rgba(239,68,68,0.15); color: #f87171; }
+  .tk-priority-urgente { background: rgba(249,115,22,0.15); color: #fb923c; }
+  .tk-card-title { color: #f2f0eb; font-size: 10px; font-weight: 600; margin-bottom: 3px; line-height: 1.3; }
+  .tk-card-desc { color: #8a8b85; font-size: 8.5px; line-height: 1.4; margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .tk-card-meta { color: #8a8b85; font-size: 7.5px; line-height: 1.5; }
+</style>
+
+<div class="fmodal-overlay" id="modal-tickets" onclick="handleOverlayClick(event, 'tickets')">
+  <div class="fmodal">
+    <button class="fmodal-close" onclick="closeModal('tickets')">✕</button>
+
+    <div class="fmodal-info">
+      <div class="feature-icon">🎟</div>
+      <h2>Sistema de tickets</h2>
+      <p>Quejas, mantenimiento, consultas y seguridad — todo organizado en un tablero Kanban. La junta asigna, prioriza y resuelve. Los residentes hacen seguimiento en tiempo real.</p>
+      <ul class="fmodal-points">
+        <li>Tablero Kanban: Abierto, En Proceso, Resuelto, Cancelado</li>
+        <li>Prioridades: Normal, Urgente, Emergencia con color de alerta</li>
+        <li>Categorías: Queja, Mantenimiento, Consulta, Seguridad</li>
+        <li>Asignación a miembros de junta con seguimiento</li>
+        <li>Residentes ven estado de sus tickets en tiempo real</li>
+      </ul>
+    </div>
+
+    <div class="fmodal-preview">
+      <div class="phone-frame" style="width:240px;flex-shrink:0;">
+        <div class="tk-body">
+          <div class="tk-title">Gestión de Tickets</div>
+
+          <div class="tk-filters">
+            <div class="tk-filter-btn">
+              <svg viewBox="0 0 24 24"><path d="M5 8h14M8 12h8M11 16h2"/></svg>
+              <span>Tipo</span>
+              <svg class="tk-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="tk-add-btn">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <div class="tk-filter-btn">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Prioridad</span>
+              <svg class="tk-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+
+          <div class="tk-col-label">Abierto</div>
+          <div class="tk-segments">
+            <div class="tk-seg active"></div>
+            <div class="tk-seg"></div>
+            <div class="tk-seg"></div>
+            <div class="tk-seg"></div>
+          </div>
+
+          <div class="tk-card">
+            <div class="tk-card-top">
+              <span class="tk-category">Seguridad</span>
+              <span class="tk-priority-badge">Emergencia</span>
+            </div>
+            <div class="tk-card-title">Portón de entrada no cierra</div>
+            <div class="tk-card-desc">El portón principal de la residencial lleva desde ayer sin cerrar correctamente. Cualquier vehículo o persona...</div>
+            <div class="tk-card-meta">
+              <div>Enviado por Diego Morales</div>
+              <div>Sin asignar</div>
+            </div>
+          </div>
+
+          <div class="tk-card">
+            <div class="tk-card-top">
+              <span class="tk-category">Seguridad</span>
+              <svg viewBox="0 0 24 24" style="width:9px;height:9px;stroke:#8a8b85;fill:none;stroke-width:1.8;"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+              <span class="tk-priority-badge">Emergencia</span>
+            </div>
+            <div class="tk-card-title">Fuga de agua en calle</div>
+            <div class="tk-card-desc">Hay una fuga de agua importante en la calle principal frente a las casas 5-48 y 5-50. El agua lleva más de 2...</div>
+            <div class="tk-card-meta">
+              <div>Enviado por Diego Morales</div>
+              <div>Asignado a Carlos Pérez</div>
             </div>
           </div>
         </div>
