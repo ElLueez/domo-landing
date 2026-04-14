@@ -837,7 +837,7 @@
       <h3>Directorio de unidades</h3>
       <p>Información de cada unidad y residente en un solo lugar. La junta puede verificar DPI, gestionar roles y contactar a cualquier vecino al instante.</p>
     </div>
-    <div class="feature-card fade-up">
+    <div class="feature-card fade-up" onclick="openModal('reportes')">
       <div class="feature-icon">📈</div>
       <h3>Reportes para la asamblea</h3>
       <p>Genera el reporte financiero mensual en un clic. Listo para presentar en asamblea, sin Excel, sin preparación manual.</p>
@@ -1681,6 +1681,159 @@
                 <div class="dir-unit-type">Casa</div>
               </div>
               <div class="dir-cell dir-cell-resident" style="color:#8a8b85;font-size:7.5px;font-style:italic;">Sin residentes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── REPORTES MODAL ── -->
+<style>
+  .rpt-body { padding: 12px; overflow-y: auto; max-height: 100%; }
+  .rpt-title { color: #f2f0eb; font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+  .rpt-month-nav { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 10px; }
+  .rpt-month-nav span { color: #f2f0eb; font-size: 10px; font-weight: 600; }
+  .rpt-month-btn { color: #8a8b85; font-size: 12px; }
+  .rpt-dl-btn {
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    width: 100%; background: #1e1f1c; border: 1px solid #2a2b28;
+    border-radius: 8px; padding: 7px; margin-bottom: 10px;
+    color: #f2f0eb; font-size: 9px; font-weight: 600;
+    cursor: pointer;
+  }
+  .rpt-dl-btn svg { width: 10px; height: 10px; stroke: #a3d5d0; fill: none; stroke-width: 2; }
+  .rpt-card { background: #1e1f1c; border: 1px solid #2a2b28; border-radius: 8px; padding: 10px; margin-bottom: 8px; }
+  .rpt-card-label { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .rpt-label-left { display: flex; align-items: center; gap: 4px; color: #8a8b85; font-size: 7px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; }
+  .rpt-label-left svg { width: 9px; height: 9px; stroke: #8a8b85; fill: none; stroke-width: 2; }
+  .rpt-pct { color: #a3d5d0; font-size: 8px; font-weight: 600; }
+  .rpt-amount-big { color: #f2f0eb; font-size: 20px; font-weight: 700; margin-bottom: 1px; }
+  .rpt-amount-sub { color: #8a8b85; font-size: 7.5px; margin-bottom: 7px; }
+  .rpt-progress-track { background: #2a2b28; border-radius: 4px; height: 4px; width: 100%; }
+  .rpt-progress-fill { background: #a3d5d0; border-radius: 4px; height: 4px; }
+  .rpt-donut { display: flex; justify-content: center; margin: 6px 0 8px; }
+  .rpt-cat-row { border-top: 1px solid #2a2b28; padding: 5px 0; }
+  .rpt-cat-row:first-child { border-top: none; }
+  .rpt-cat-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; }
+  .rpt-cat-name { color: #f2f0eb; font-size: 8.5px; font-weight: 500; display: flex; align-items: center; gap: 3px; }
+  .rpt-cat-name svg { width: 8px; height: 8px; stroke: #8a8b85; fill: none; stroke-width: 2; }
+  .rpt-cat-amounts { color: #8a8b85; font-size: 7.5px; }
+  .rpt-cat-track { background: #2a2b28; border-radius: 3px; height: 3px; }
+</style>
+
+<div class="fmodal-overlay" id="modal-reportes" onclick="handleOverlayClick(event, 'reportes')">
+  <div class="fmodal">
+    <button class="fmodal-close" onclick="closeModal('reportes')">✕</button>
+
+    <div class="fmodal-info">
+      <div class="feature-icon">📈</div>
+      <h2>Reportes para la asamblea</h2>
+      <p>Ingresos, gastos, tasa de recaudación y desglose por categoría — todo en una sola vista. Descarga el reporte mensual con un clic y preséntalo en asamblea sin preparación extra.</p>
+      <ul class="fmodal-points">
+        <li>Vista de ingresos con tasa de recaudación del mes</li>
+        <li>Gráfico de egresos por categoría con presupuesto vs. ejecutado</li>
+        <li>Desglose expandible por categoría con detalle de gastos</li>
+        <li>Navegación por mes para comparar períodos anteriores</li>
+        <li>Descarga el reporte financiero con un solo clic</li>
+      </ul>
+    </div>
+
+    <div class="fmodal-preview">
+      <div class="phone-frame" style="width:240px;flex-shrink:0;overflow:hidden;">
+        <div class="rpt-body">
+          <div class="rpt-title">Finanzas</div>
+
+          <div class="rpt-month-nav">
+            <span class="rpt-month-btn">‹</span>
+            <span>Abril 2026</span>
+            <span class="rpt-month-btn">›</span>
+          </div>
+
+          <div class="rpt-dl-btn">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Reporte
+          </div>
+
+          <div class="rpt-card">
+            <div class="rpt-card-label">
+              <div class="rpt-label-left">
+                <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                Ingresos
+              </div>
+              <span class="rpt-pct">42% recaudado</span>
+            </div>
+            <div class="rpt-amount-big">Q3,500.00</div>
+            <div class="rpt-amount-sub">de Q8,350.00 esperados</div>
+            <div class="rpt-progress-track">
+              <div class="rpt-progress-fill" style="width:42%"></div>
+            </div>
+          </div>
+
+          <div class="rpt-card">
+            <div class="rpt-card-label">
+              <div class="rpt-label-left">
+                <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                Egresos
+              </div>
+            </div>
+
+            <div class="rpt-donut">
+              <svg width="90" height="90" viewBox="0 0 90 90">
+                <g transform="rotate(-90 45 45)">
+                  <!-- Seguridad: purple ~62% -->
+                  <circle cx="45" cy="45" r="34" fill="none" stroke="#8b5cf6" stroke-width="9"
+                    stroke-dasharray="132 81" stroke-dashoffset="0"/>
+                  <!-- Mantenimiento: blue ~28% -->
+                  <circle cx="45" cy="45" r="34" fill="none" stroke="#3b82f6" stroke-width="9"
+                    stroke-dasharray="60 153" stroke-dashoffset="-132"/>
+                  <!-- Agua: amber ~10% -->
+                  <circle cx="45" cy="45" r="34" fill="none" stroke="#f59e0b" stroke-width="9"
+                    stroke-dasharray="21 192" stroke-dashoffset="-192"/>
+                </g>
+                <text x="45" y="42" text-anchor="middle" fill="#f2f0eb" font-size="9" font-weight="700">Q1,830</text>
+                <text x="45" y="53" text-anchor="middle" fill="#8a8b85" font-size="6">de Q2,200</text>
+              </svg>
+            </div>
+
+            <div class="rpt-cat-row">
+              <div class="rpt-cat-top">
+                <div class="rpt-cat-name">
+                  <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+                  Seguridad
+                </div>
+                <span class="rpt-cat-amounts">Q1,130 / Q1,200</span>
+              </div>
+              <div class="rpt-cat-track">
+                <div style="width:94%;background:#8b5cf6;height:3px;border-radius:3px;"></div>
+              </div>
+            </div>
+
+            <div class="rpt-cat-row">
+              <div class="rpt-cat-top">
+                <div class="rpt-cat-name">
+                  <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+                  Mantenimiento
+                </div>
+                <span class="rpt-cat-amounts">Q340 / Q600</span>
+              </div>
+              <div class="rpt-cat-track">
+                <div style="width:57%;background:#3b82f6;height:3px;border-radius:3px;"></div>
+              </div>
+            </div>
+
+            <div class="rpt-cat-row">
+              <div class="rpt-cat-top">
+                <div class="rpt-cat-name">
+                  <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+                  Agua
+                </div>
+                <span class="rpt-cat-amounts">Q360 / Q400</span>
+              </div>
+              <div class="rpt-cat-track">
+                <div style="width:90%;background:#f59e0b;height:3px;border-radius:3px;"></div>
+              </div>
             </div>
           </div>
         </div>
