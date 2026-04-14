@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solicitar demo gratis — Domo</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f0e;
+    --surface: #161714;
+    --surface2: #1e1f1c;
+    --border: #2a2b28;
+    --text: #f2f0eb;
+    --muted: #8a8b85;
+    --teal: #a3d5d0;
+    --teal-dim: #4a9e98;
+    --teal-glow: rgba(163, 213, 208, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(14,15,14,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--teal);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .nav-back {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--text); }
+  .nav-back svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  .nav-cta {
+    background: var(--teal);
+    color: var(--bg);
+    padding: 0.5rem 1.25rem;
+    border-radius: 100px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  .nav-mobile-right { display: none; }
+  .burger { display: none; }
+  .mobile-menu { display: none; }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 9rem 2rem 6rem;
+  }
+
+  .page-glow {
+    position: fixed;
+    top: 20%; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(163,213,208,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.25rem;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+    max-width: 520px;
+  }
+
+  .what-to-expect {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background: var(--teal-glow);
+    border: 1px solid rgba(163,213,208,0.15);
+    border-radius: 1rem;
+  }
+
+  .expect-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .expect-item::before {
+    content: '✓';
+    color: var(--teal);
+    flex-shrink: 0;
+    font-weight: 500;
+    margin-top: 0.05rem;
+  }
+
+  .form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .form-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--teal), transparent);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  input, select, textarea {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 0.625rem;
+    padding: 0.75rem 1rem;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    transition: border-color 0.2s;
+    width: 100%;
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.6; }
+  input:focus, select:focus, textarea:focus { border-color: rgba(163,213,208,0.5); }
+
+  select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a8b85' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  select option { background: var(--surface2); color: var(--text); }
+
+  textarea { resize: vertical; min-height: 110px; }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--teal);
+    color: var(--bg);
+    padding: 0.9rem 2rem;
+    border-radius: 100px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .submit-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .submit-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  .form-note {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 1rem;
+    opacity: 0.7;
+  }
+
+  /* Success state */
+  .success-state {
+    display: none;
+    text-align: center;
+    padding: 3rem 2rem;
+  }
+
+  .success-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: rgba(74,198,150,0.12);
+    border: 1.5px solid rgba(74,198,150,0.4);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+
+  .success-icon svg { width: 28px; height: 28px; stroke: #4ade80; fill: none; stroke-width: 2; }
+  .success-title { font-family: 'Fraunces', serif; font-size: 1.75rem; font-weight: 400; margin-bottom: 0.75rem; }
+  .success-text { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 2.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo { font-family: 'Fraunces', serif; font-size: 1.25rem; color: var(--teal); text-decoration: none; }
+  .footer-text { color: var(--muted); font-size: 0.8rem; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-back span { display: none; }
+    .nav-mobile-right { display: flex !important; align-items: center; gap: 0.75rem; }
+    .burger {
+      display: flex; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; background: none; border: none;
+    }
+    .burger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-card { padding: 1.75rem 1.25rem; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-glow"></div>
+
+<nav>
+  <a href="/" class="nav-logo">domo</a>
+  <a href="/" class="nav-back">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    <span>Volver al inicio</span>
+  </a>
+  <a href="https://domo-comunidad-unida.lovable.app/auth" class="nav-cta">Iniciar sesión</a>
+</nav>
+
+<main>
+  <div class="section-label">Demo gratuito</div>
+  <h1>Solicita tu<br>demo gratis</h1>
+  <p class="subtitle">Te contactamos en menos de 24 horas para agendar una demostración de la plataforma. Sin compromiso, sin tarjeta de crédito.</p>
+
+  <div class="what-to-expect">
+    <div class="expect-item">Una llamada de 30 minutos donde te mostramos Domo con datos reales</div>
+    <div class="expect-item">Respuesta garantizada en menos de 24 horas hábiles</div>
+    <div class="expect-item">Sin contratos ni compromisos — cancela cuando quieras</div>
+  </div>
+
+  <div class="form-card">
+    <form id="demoForm">
+      <!-- Web3Forms access key — replace with real key before going live -->
+      <input type="hidden" name="access_key" value="TU_ACCESS_KEY_AQUI">
+      <input type="hidden" name="subject" value="Nueva solicitud de demo — Domo">
+      <input type="hidden" name="from_name" value="Domo Landing Page">
+      <input type="checkbox" name="botcheck" style="display:none;">
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="nombre">Nombre completo *</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Carlos Pérez" required>
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono *</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="+502 5555-1234" required>
+        </div>
+
+        <div class="form-group">
+          <label for="correo">Correo electrónico *</label>
+          <input type="email" id="correo" name="correo" placeholder="carlos@ejemplo.com" required>
+        </div>
+
+        <div class="form-group full">
+          <label for="residencial">Nombre del residencial *</label>
+          <input type="text" id="residencial" name="residencial" placeholder="Residencial Bosque Verde" required>
+        </div>
+
+        <div class="form-group full">
+          <label for="direccion">Dirección del residencial</label>
+          <input type="text" id="direccion" name="direccion" placeholder="Zona 16, Ciudad de Guatemala">
+        </div>
+
+        <div class="form-group">
+          <label for="unidades">Número de unidades en tu comunidad</label>
+          <select id="unidades" name="unidades">
+            <option value="" disabled selected>Seleccionar rango</option>
+            <option value="0-25">0 – 25 unidades</option>
+            <option value="25-50">25 – 50 unidades</option>
+            <option value="50-100">50 – 100 unidades</option>
+            <option value="100-150">100 – 150 unidades</option>
+            <option value="150-200">150 – 200 unidades</option>
+            <option value="200+">200+ unidades</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="rol">Tu rol en la comunidad</label>
+          <select id="rol" name="rol" onchange="document.getElementById('rolOtroWrap').style.display = this.value === 'otro' ? 'flex' : 'none'">
+            <option value="" disabled selected>Seleccionar rol</option>
+            <option value="presidente">Presidente</option>
+            <option value="junta">Junta</option>
+            <option value="residente">Residente</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="form-group full" id="rolOtroWrap" style="display:none;">
+          <label for="rolOtro">¿Cuál es tu rol? <span style="color:var(--muted);font-weight:300;">(máx. 50 caracteres)</span></label>
+          <input type="text" id="rolOtro" name="rol_otro" placeholder="Ej. Administrador externo" maxlength="50">
+        </div>
+
+        <div class="form-group full">
+          <label for="mensaje">Mensaje (opcional)</label>
+          <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos un poco sobre tu comunidad o cualquier pregunta que tengas..."></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Solicitar demo gratis
+      </button>
+      <p class="form-note">Al enviar este formulario aceptas que nos pongamos en contacto contigo.</p>
+    </form>
+
+    <div class="success-state" id="successState">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="success-title">¡Solicitud recibida!</div>
+      <p class="success-text">Gracias por tu interés en Domo. Te contactaremos en menos de 24 horas para agendar tu demostración.<br><br>Mientras tanto, puedes explorar la plataforma con nuestra cuenta de prueba.</p>
+      <a href="https://domo-comunidad-unida.lovable.app/auth" style="display:inline-block;margin-top:1.5rem;background:var(--teal);color:var(--bg);padding:0.75rem 1.75rem;border-radius:100px;text-decoration:none;font-weight:500;font-size:0.9rem;">Ver la plataforma →</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <a href="/" class="footer-logo">domo</a>
+  <div class="footer-text">Tu comunidad, en un solo lugar · Guatemala, 2026</div>
+  <div class="footer-text">
+    <a href="mailto:hola@domogt.com" style="color: var(--teal); text-decoration: none;">hola@domogt.com</a>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('demoForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" style="animation:spin 1s linear infinite"><circle cx="12" cy="12" r="10" stroke-dasharray="30 60" fill="none" stroke="currentColor" stroke-width="2"/></svg> Enviando...';
+
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+
+      if (result.success) {
+        document.getElementById('demoForm').style.display = 'none';
+        document.getElementById('successState').style.display = 'block';
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch(err) {
+      btn.disabled = false;
+      btn.innerHTML = '<svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Solicitar demo gratis';
+      alert('Hubo un error al enviar. Por favor intenta de nuevo o escríbenos a hola@domogt.com');
+    }
+  });
+</script>
+
+<style>
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+</style>
+
+</body>
+</html>
