@@ -991,11 +991,11 @@
 <!-- ── MURO MODAL STYLES ── -->
 <style>
   .muro-post { background: #1e1f1c; border: 1px solid #2a2b28; border-radius: 10px; padding: 11px 12px; margin-bottom: 8px; }
-  .muro-post-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+  .muro-post-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
   .muro-tag { font-size: 7.5px; font-weight: 600; padding: 2px 7px; border-radius: 8px; }
-  .muro-tag-general { background: rgba(163,213,208,0.15); color: #a3d5d0; }
-  .muro-tag-encuesta { background: rgba(99,153,34,0.18); color: #97C459; }
-  .muro-tag-pinned { color: #a3d5d0; font-size: 9px; }
+  .muro-tag-general { background: transparent; border: 1px solid #8a8b85; color: #f2f0eb; }
+  .muro-tag-encuesta { background: transparent; border: 1px solid #8a8b85; color: #f2f0eb; }
+  .muro-dots { color: #8a8b85; font-size: 11px; margin-left: auto; letter-spacing: 1px; }
   .muro-author { color: #8a8b85; font-size: 8.5px; }
   .muro-time { color: #8a8b85; font-size: 8px; margin-left: auto; }
   .muro-title { color: #f2f0eb; font-size: 11px; font-weight: 600; margin-bottom: 5px; line-height: 1.3; }
@@ -1134,7 +1134,7 @@
     <div class="fmodal-preview">
       <div class="phone-frame">
         <div class="mp-body">
-          <div class="mp-header">
+          <div style="text-align:center; margin-bottom:14px;">
             <span class="mp-title">Muro de la Comunidad</span>
           </div>
 
@@ -1152,10 +1152,11 @@
 
           <div class="muro-post">
             <div class="muro-post-meta">
-              <span class="muro-tag-pinned">📌</span>
+              <svg viewBox="0 0 24 24" style="width:10px;height:10px;stroke:#a3d5d0;fill:none;stroke-width:2;flex-shrink:0;"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>
               <span class="muro-tag muro-tag-general">General</span>
               <span class="muro-author">Carlos Pérez</span>
               <span class="muro-time">hace 25 días</span>
+              <span class="muro-dots">···</span>
             </div>
             <div class="muro-title">Bienvenidos al portal de Residencial Bosque Verde</div>
             <div class="muro-body">Estimados vecinos, a partir de hoy contamos con nuestro portal comunitario Domo. Aquí podrán consultar sus estados de cuenta y reportar incidencias.</div>
@@ -1180,6 +1181,7 @@
               <span class="muro-tag muro-tag-encuesta">Encuesta</span>
               <span class="muro-author">Carlos Pérez</span>
               <span class="muro-time">hace 9 días</span>
+              <span class="muro-dots">···</span>
             </div>
             <div class="muro-title">Reparación de baches en calles</div>
             <div class="muro-body">Por favor votar cuál de las dos calles siguientes se debería empezar primero.</div>
