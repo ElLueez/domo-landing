@@ -827,7 +827,7 @@
       <h3>Transparencia financiera</h3>
       <p>Ingresos, gastos, presupuesto por categoría y saldo real. Los residentes ven en qué se usa su cuota. La junta reporta sin esfuerzo.</p>
     </div>
-    <div class="feature-card fade-up">
+    <div class="feature-card fade-up" onclick="openModal('mensajes')">
       <div class="feature-icon">💬</div>
       <h3>Mensajería interna</h3>
       <p>Comunicación directa entre residentes y la junta. Privada, organizada y con historial. No más números personales en grupos.</p>
@@ -1429,6 +1429,110 @@
             <div class="af-amount">Q150.00</div>
             <div class="af-receipt">
               <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MENSAJES MODAL ── -->
+<style>
+  .msg-body { display: flex; flex-direction: column; height: 100%; }
+  .msg-header-bar { padding: 12px 12px 8px; border-bottom: 1px solid #2a2b28; }
+  .msg-top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .msg-title { color: #f2f0eb; font-size: 15px; font-weight: 700; }
+  .msg-nuevo-btn { display: flex; align-items: center; gap: 3px; background: #a3d5d0; color: #0d1f1e; font-size: 9px; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
+  .msg-nuevo-btn svg { width: 9px; height: 9px; stroke: #0d1f1e; fill: none; stroke-width: 2.5; }
+  .msg-search { width: 100%; background: #121314; border: 1px solid #2a2b28; border-radius: 8px; height: 28px; display: flex; align-items: center; gap: 6px; padding: 0 10px; }
+  .msg-search svg { width: 10px; height: 10px; stroke: #8a8b85; fill: none; stroke-width: 2; flex-shrink: 0; }
+  .msg-search span { color: #8a8b85; font-size: 8.5px; }
+  .msg-thread { padding: 10px 12px; border-bottom: 1px solid #2a2b28; cursor: default; }
+  .msg-thread:last-child { border-bottom: none; }
+  .msg-thread-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+  .msg-thread-name { color: #f2f0eb; font-size: 10px; font-weight: 600; }
+  .msg-thread-date { color: #8a8b85; font-size: 8px; }
+  .msg-thread-subject { color: #f2f0eb; font-size: 9px; font-weight: 500; margin-bottom: 2px; }
+  .msg-thread-preview { color: #8a8b85; font-size: 8.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .msg-unread-dot { width: 6px; height: 6px; border-radius: 50%; background: #a3d5d0; flex-shrink: 0; margin-top: 2px; }
+  .msg-thread-inner { display: flex; gap: 6px; align-items: flex-start; }
+  .msg-thread-content { flex: 1; min-width: 0; }
+</style>
+
+<div class="fmodal-overlay" id="modal-mensajes" onclick="handleOverlayClick(event, 'mensajes')">
+  <div class="fmodal">
+    <button class="fmodal-close" onclick="closeModal('mensajes')">✕</button>
+
+    <div class="fmodal-info">
+      <div class="feature-icon">💬</div>
+      <h2>Mensajería interna</h2>
+      <p>Comunicación directa entre residentes y la junta, dentro de la plataforma. Privada, organizada por conversación y con historial completo.</p>
+      <ul class="fmodal-points">
+        <li>Mensajes directos entre cualquier miembro de la comunidad</li>
+        <li>Conversaciones agrupadas por hilo con historial completo</li>
+        <li>Sin números personales expuestos en grupos de WhatsApp</li>
+        <li>La junta puede iniciar conversaciones con cualquier residente</li>
+        <li>Adjuntos de imágenes y documentos por mensaje</li>
+      </ul>
+    </div>
+
+    <div class="fmodal-preview">
+      <div class="phone-frame" style="width:240px;flex-shrink:0;">
+        <div class="msg-body">
+          <div class="msg-header-bar">
+            <div class="msg-top-row">
+              <span class="msg-title">Mensajes</span>
+              <div class="msg-nuevo-btn">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Nuevo
+              </div>
+            </div>
+            <div class="msg-search">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span>Buscar mensajes...</span>
+            </div>
+          </div>
+
+          <div class="msg-thread">
+            <div class="msg-thread-inner">
+              <div class="msg-unread-dot"></div>
+              <div class="msg-thread-content">
+                <div class="msg-thread-top">
+                  <span class="msg-thread-name">Carlos Pérez</span>
+                  <span class="msg-thread-date">21 mar</span>
+                </div>
+                <div class="msg-thread-subject">Agenda reunión de junta — Abril 2026</div>
+                <div class="msg-thread-preview">María, adjunto la agenda preliminar para la asamblea del 12 de...</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="msg-thread">
+            <div class="msg-thread-inner">
+              <div style="width:6px;flex-shrink:0;"></div>
+              <div class="msg-thread-content">
+                <div class="msg-thread-top">
+                  <span class="msg-thread-name">Carlos Pérez, Diego Morales</span>
+                  <span class="msg-thread-date">20 mar</span>
+                </div>
+                <div class="msg-thread-subject">Recordatorio de pago pendiente</div>
+                <div class="msg-thread-preview">Buenos días Carlos, entendido. Realizaré el pago esta semana p...</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="msg-thread">
+            <div class="msg-thread-inner">
+              <div style="width:6px;flex-shrink:0;"></div>
+              <div class="msg-thread-content">
+                <div class="msg-thread-top">
+                  <span class="msg-thread-name">María López</span>
+                  <span class="msg-thread-date">15 mar</span>
+                </div>
+                <div class="msg-thread-subject">Consulta sobre cuota de mantenimiento</div>
+                <div class="msg-thread-preview">Hola María, la cuota cubre el mantenimiento de áreas comunes...</div>
+              </div>
             </div>
           </div>
         </div>
