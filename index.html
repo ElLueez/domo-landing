@@ -822,7 +822,7 @@
       <p>Quejas, mantenimiento, consultas y seguridad. La junta gestiona con un tablero Kanban. Nada se pierde.</p>
       <span class="feature-tag">Adiós WhatsApp</span>
     </div>
-    <div class="feature-card fade-up">
+    <div class="feature-card fade-up" onclick="openModal('finanzas')">
       <div class="feature-icon">📊</div>
       <h3>Transparencia financiera</h3>
       <p>Ingresos, gastos, presupuesto por categoría y saldo real. Los residentes ven en qué se usa su cuota. La junta reporta sin esfuerzo.</p>
@@ -1312,6 +1312,123 @@
             <div class="tk-card-meta">
               <div>Enviado por Diego Morales</div>
               <div>Asignado a Carlos Pérez</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FINANZAS MODAL ── -->
+<style>
+  .af-body { padding: 12px; }
+  .af-title { color: #f2f0eb; font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+  .af-tabs { display: flex; gap: 0; border-bottom: 1px solid #2a2b28; margin-bottom: 10px; }
+  .af-tab { font-size: 9px; font-weight: 500; padding: 0 10px 6px; color: #8a8b85; border-bottom: 2px solid transparent; white-space: nowrap; }
+  .af-tab.active { color: #a3d5d0; border-bottom-color: #a3d5d0; }
+  .af-month-nav { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px; }
+  .af-month-nav span { color: #f2f0eb; font-size: 10px; font-weight: 500; }
+  .af-month-btn { width: 20px; height: 20px; border-radius: 6px; border: 1px solid #2a2b28; display: flex; align-items: center; justify-content: center; color: #8a8b85; font-size: 10px; }
+  .af-search-row { display: flex; gap: 5px; margin-bottom: 7px; }
+  .af-search { flex: 1; background: #1e1f1c; border: 1px solid #2a2b28; border-radius: 7px; height: 26px; display: flex; align-items: center; gap: 5px; padding: 0 8px; }
+  .af-search svg { width: 9px; height: 9px; stroke: #8a8b85; fill: none; stroke-width: 2; flex-shrink: 0; }
+  .af-search span { color: #8a8b85; font-size: 8px; }
+  .af-concept-btn { background: #1e1f1c; border: 1px solid #2a2b28; border-radius: 7px; height: 26px; padding: 0 8px; display: flex; align-items: center; gap: 4px; color: #8a8b85; font-size: 8px; white-space: nowrap; }
+  .af-concept-btn svg { width: 9px; height: 9px; stroke: #8a8b85; fill: none; stroke-width: 2; }
+  .af-pills { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 6px; }
+  .af-pill { font-size: 7.5px; font-weight: 500; padding: 3px 8px; border-radius: 20px; border: 1px solid #2a2b28; color: #8a8b85; background: #1e1f1c; display: flex; align-items: center; gap: 3px; }
+  .af-pill.active { background: #a3d5d0; color: #0d1f1e; border-color: #a3d5d0; }
+  .af-pill-badge { background: #a3d5d0; color: #0d1f1e; font-size: 7px; font-weight: 700; width: 14px; height: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .af-pill.active .af-pill-badge { background: rgba(0,0,0,0.2); color: #0d1f1e; }
+  .af-summary { color: #8a8b85; font-size: 7.5px; margin-bottom: 7px; }
+  .af-card { background: #1e1f1c; border: 1px solid #2a2b28; border-radius: 8px; padding: 9px 10px; margin-bottom: 6px; }
+  .af-card-top { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+  .af-resident { color: #f2f0eb; font-size: 10px; font-weight: 600; }
+  .af-status-badge { font-size: 7.5px; font-weight: 600; padding: 1px 6px; border-radius: 10px; }
+  .af-status-verificado { background: rgba(34,197,94,0.15); color: #4ade80; }
+  .af-status-pendiente { background: rgba(234,179,8,0.15); color: #facc15; }
+  .af-card-meta { color: #8a8b85; font-size: 7.5px; margin-bottom: 5px; line-height: 1.5; }
+  .af-amount { color: #f2f0eb; font-size: 14px; font-weight: 700; }
+  .af-receipt { width: 32px; height: 32px; background: #2a2b28; border-radius: 6px; margin-top: 5px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .af-receipt svg { width: 12px; height: 12px; stroke: #8a8b85; fill: none; stroke-width: 1.5; }
+</style>
+
+<div class="fmodal-overlay" id="modal-finanzas" onclick="handleOverlayClick(event, 'finanzas')">
+  <div class="fmodal">
+    <button class="fmodal-close" onclick="closeModal('finanzas')">✕</button>
+
+    <div class="fmodal-info">
+      <div class="feature-icon">📊</div>
+      <h2>Transparencia financiera</h2>
+      <p>La junta administra cobros, conceptos y gastos desde un solo panel. Los residentes ven en qué se usa su cuota. Sin Excel, sin hojas de cálculo compartidas.</p>
+      <ul class="fmodal-points">
+        <li>Panel de cobros con verificación con un clic</li>
+        <li>Búsqueda por residente o unidad con filtro por concepto</li>
+        <li>Pestañas: Cobros, Conceptos, Gastos, Reportes</li>
+        <li>Historial de pagos verificados y rechazados por mes</li>
+        <li>Comprobante de transferencia visible directo en la plataforma</li>
+      </ul>
+    </div>
+
+    <div class="fmodal-preview">
+      <div class="phone-frame" style="width:240px;flex-shrink:0;">
+        <div class="af-body">
+          <div class="af-title">Administración de Finanzas</div>
+
+          <div class="af-tabs">
+            <div class="af-tab active">Cobros</div>
+            <div class="af-tab">Conceptos</div>
+            <div class="af-tab">Gastos</div>
+            <div class="af-tab">Reportes</div>
+          </div>
+
+          <div class="af-month-nav">
+            <div class="af-month-btn">‹</div>
+            <span>Abril 2026</span>
+            <div class="af-month-btn">›</div>
+          </div>
+
+          <div class="af-search-row">
+            <div class="af-search">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span>Buscar...</span>
+            </div>
+            <div class="af-concept-btn">
+              <svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              Concepto
+            </div>
+          </div>
+
+          <div class="af-pills">
+            <div class="af-pill">Pendientes <span class="af-pill-badge">1</span></div>
+            <div class="af-pill active">Verificados</div>
+            <div class="af-pill">Rechazados</div>
+          </div>
+
+          <div class="af-summary">2 pagos · Q500.00 total</div>
+
+          <div class="af-card">
+            <div class="af-card-top">
+              <span class="af-resident">Diego Morales</span>
+              <span class="af-status-badge af-status-verificado">Verificado</span>
+            </div>
+            <div class="af-card-meta">16 Calle 5-50, Zona 16, Residencial Bosque Verde<br>Abr 2026 · Seguridad &nbsp;·&nbsp; Transferencia &nbsp;·&nbsp; 3 abr. 2026</div>
+            <div class="af-amount">Q350.00</div>
+            <div class="af-receipt">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+          </div>
+
+          <div class="af-card">
+            <div class="af-card-top">
+              <span class="af-resident">Diego Morales</span>
+              <span class="af-status-badge af-status-verificado">Verificado</span>
+            </div>
+            <div class="af-card-meta">16 Calle 5-50, Zona 16, Residencial Bosque Verde<br>Abr 2026 · Agua &nbsp;·&nbsp; Transferencia &nbsp;·&nbsp; 3 abr. 2026</div>
+            <div class="af-amount">Q150.00</div>
+            <div class="af-receipt">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             </div>
           </div>
         </div>
