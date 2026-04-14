@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domo — Tu comunidad, en un solo lugar</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f0e;
+    --surface: #161714;
+    --surface2: #1e1f1c;
+    --border: #2a2b28;
+    --text: #f2f0eb;
+    --muted: #8a8b85;
+    --teal: #a3d5d0;
+    --teal-dim: #4a9e98;
+    --teal-glow: rgba(163, 213, 208, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(14,15,14,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--teal);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--teal);
+    color: var(--bg) !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 100px;
+    font-weight: 500 !important;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  section { position: relative; z-index: 1; }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 20%; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(163,213,208,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.375rem 1rem;
+    font-size: 0.8rem;
+    color: var(--teal);
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    max-width: 900px;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--teal); }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+  }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+
+  .btn-primary {
+    background: var(--teal);
+    color: var(--bg);
+    padding: 0.875rem 2rem;
+    border-radius: 100px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    padding: 0.875rem 2rem;
+    border-radius: 100px;
+    font-size: 0.95rem;
+    font-weight: 400;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, transform 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-outline:hover { border-color: var(--teal); transform: translateY(-1px); }
+
+  .hero-scroll {
+    margin-top: 5rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, var(--teal), transparent);
+    animation: scrollDown 1.5s ease-in-out infinite;
+  }
+
+  @keyframes scrollDown {
+    0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+    50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+    100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+  }
+
+  .problem { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1rem;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-top: 3rem;
+  }
+
+  .problem-text h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .problem-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+
+  .pain-list { list-style: none; margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+
+  .pain-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .pain-list li::before { content: '×'; color: #e05252; font-size: 1.1rem; line-height: 1.5; flex-shrink: 0; }
+
+  .problem-visual {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .problem-visual::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, transparent, #e05252, transparent);
+  }
+
+  .chat-bubble {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 0.875rem 1.25rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .chat-bubble.me {
+    background: rgba(163,213,208,0.06);
+    border-color: rgba(163,213,208,0.15);
+    margin-left: 2rem;
+  }
+
+  .chat-name { font-size: 0.7rem; color: var(--muted); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .chat-text { color: var(--text); line-height: 1.5; }
+
+  .excel-mock {
+    margin-top: 1.5rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    font-size: 0.75rem;
+  }
+
+  .excel-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; border-bottom: 1px solid var(--border); }
+  .excel-row:last-child { border-bottom: none; }
+  .excel-cell { padding: 0.5rem 0.75rem; border-right: 1px solid var(--border); color: var(--muted); }
+  .excel-cell:last-child { border-right: none; }
+  .excel-cell.header { background: rgba(255,255,255,0.03); color: var(--text); font-weight: 500; }
+  .excel-cell.late { color: #e05252; }
+
+  .features { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+
+  .features-header { text-align: center; margin-bottom: 4rem; }
+
+  .features-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .features-header p { color: var(--muted); max-width: 480px; margin: 0 auto; }
+
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
+  }
+
+  .feature-card:hover { border-color: rgba(163,213,208,0.3); transform: translateY(-3px); }
+
+  .feature-card.highlight {
+    border-color: rgba(163,213,208,0.25);
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(163,213,208,0.04) 100%);
+  }
+
+  .feature-icon {
+    width: 44px; height: 44px;
+    background: var(--teal-glow);
+    border: 1px solid rgba(163,213,208,0.2);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+  }
+
+  .feature-card h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 400; margin-bottom: 0.75rem; color: var(--text); }
+  .feature-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+  .feature-tag {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    background: var(--teal-glow);
+    border: 1px solid rgba(163,213,208,0.15);
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+  }
+
+  .how { padding: 6rem 2rem; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .how-inner { max-width: 1100px; margin: 0 auto; }
+  .how-header { text-align: center; margin-bottom: 4rem; }
+
+  .how-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; position: relative; }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 28px; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--teal-dim), transparent);
+  }
+
+  .step { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1rem; }
+
+  .step-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--teal-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    color: var(--teal);
+    position: relative;
+    z-index: 1;
+  }
+
+  .step h3 { font-size: 0.95rem; font-weight: 500; color: var(--text); }
+  .step p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  .pricing { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; text-align: center; }
+
+  .pricing h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .pricing-sub { color: var(--muted); margin-bottom: 3rem; }
+
+  .pricing-card {
+    background: var(--surface);
+    border: 1px solid rgba(163,213,208,0.25);
+    border-radius: 2rem;
+    padding: 3rem;
+    max-width: 560px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pricing-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--teal), transparent);
+  }
+
+  .pricing-badge {
+    display: inline-block;
+    background: var(--teal-glow);
+    border: 1px solid rgba(163,213,208,0.2);
+    color: var(--teal);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.85rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+  }
+
+  .pricing-amount { display: flex; align-items: baseline; justify-content: center; gap: 0.25rem; margin-bottom: 0.5rem; }
+  .pricing-currency { font-size: 1.5rem; color: var(--muted); font-family: 'Fraunces', serif; }
+  .pricing-number { font-family: 'Fraunces', serif; font-size: 4rem; font-weight: 400; color: var(--text); letter-spacing: -0.03em; line-height: 1; }
+  .pricing-unit { color: var(--muted); font-size: 0.9rem; }
+
+  .pricing-setup { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+  .pricing-setup strong { color: var(--text); }
+
+  .pricing-features { list-style: none; text-align: left; display: flex; flex-direction: column; gap: 0.875rem; margin-bottom: 2.5rem; }
+  .pricing-features li { display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; color: var(--muted); }
+  .pricing-features li::before { content: '✓'; color: var(--teal); font-weight: 500; flex-shrink: 0; }
+  .pricing-note { margin-top: 2rem; font-size: 0.8rem; color: var(--muted); font-style: italic; }
+
+  .partner { padding: 6rem 2rem; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .partner-inner { max-width: 1100px; margin: 0 auto; }
+  .partner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .partner-text .section-label { margin-bottom: 1rem; }
+
+  .partner-text h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    line-height: 1.15;
+  }
+
+  .partner-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+  .partner-cards { display: flex; flex-direction: column; gap: 1rem; }
+
+  .partner-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    transition: border-color 0.3s;
+  }
+
+  .partner-card:hover { border-color: rgba(163,213,208,0.3); }
+  .partner-card-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+  .partner-card h4 { font-size: 1.5rem; font-family: 'Fraunces', serif; font-weight: 400; margin-bottom: 0.25rem; }
+  .partner-card p { color: var(--muted); font-size: 0.85rem; }
+
+  .partner-who { margin-top: 2rem; padding: 1.5rem; background: var(--teal-glow); border: 1px solid rgba(163,213,208,0.15); border-radius: 1rem; }
+  .partner-who p { font-size: 0.875rem; color: var(--muted); margin: 0; }
+  .partner-who strong { color: var(--text); }
+
+  .trust { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; text-align: center; }
+
+  .trust-quote {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .trust-quote::before {
+    content: '"';
+    font-size: 5rem;
+    color: var(--teal);
+    opacity: 0.3;
+    position: absolute;
+    top: -2rem; left: 50%;
+    transform: translateX(-50%);
+    line-height: 1;
+    font-family: 'Fraunces', serif;
+  }
+
+  .trust-author { color: var(--muted); font-size: 0.875rem; }
+  .trust-author strong { color: var(--teal); }
+
+  .trust-stats { display: flex; justify-content: center; gap: 4rem; margin-top: 4rem; padding-top: 4rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .stat h3 { font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 400; color: var(--teal); letter-spacing: -0.03em; }
+  .stat p { color: var(--muted); font-size: 0.85rem; margin-top: 0.25rem; }
+
+  .cta { padding: 8rem 2rem; text-align: center; position: relative; overflow: hidden; }
+
+  .cta-glow {
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(163,213,208,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+  }
+
+  .cta h2 em { font-style: italic; color: var(--teal); }
+  .cta p { color: var(--muted); max-width: 480px; margin: 0 auto 2.5rem; }
+
+  footer {
+    padding: 3rem 2.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo { font-family: 'Fraunces', serif; font-size: 1.25rem; color: var(--teal); text-decoration: none; }
+  .footer-text { color: var(--muted); font-size: 0.8rem; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    .problem-grid, .partner-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .steps::before { display: none; }
+    .trust-stats { gap: 2rem; }
+    footer { flex-direction: column; text-align: center; }
+  }
+
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── Feature Modal ── */
+  .fmodal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    background: rgba(8,9,8,0.82);
+    backdrop-filter: blur(6px);
+    padding: 1.5rem;
+  }
+  .fmodal-overlay.open { display: flex; }
+
+  .fmodal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.75rem;
+    width: 100%;
+    max-width: 860px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    animation: modalIn 0.28s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.96) translateY(12px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .fmodal-close {
+    position: absolute;
+    top: 1.25rem; right: 1.25rem;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10;
+    line-height: 1;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .fmodal-close:hover { color: var(--text); border-color: var(--teal); }
+
+  .fmodal-info {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--border);
+  }
+
+  .fmodal-info .feature-icon { margin-bottom: 1.5rem; }
+
+  .fmodal-info h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .fmodal-info p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+
+  .fmodal-points { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .fmodal-points li {
+    display: flex; align-items: flex-start; gap: 0.65rem;
+    font-size: 0.875rem; color: var(--muted);
+  }
+  .fmodal-points li::before { content: '✓'; color: var(--teal); flex-shrink: 0; margin-top: 0.05rem; }
+
+  .fmodal-preview {
+    padding: 2rem;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Phone frame */
+  .phone-frame {
+    width: 240px;
+    background: #121314;
+    border-radius: 28px;
+    border: 1.5px solid #2a2a2a;
+    overflow: hidden;
+    font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 32px 64px rgba(0,0,0,0.5);
+  }
+
+  /* Mis Pagos preview */
+  .mp-body { padding: 16px; }
+  .mp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .mp-title { color: #f2f0eb; font-size: 15px; font-weight: 600; }
+  .mp-btn { background: #a3d5d0; color: #0d1f1e; font-size: 9px; font-weight: 600; padding: 5px 10px; border-radius: 20px; white-space: nowrap; }
+
+  .mp-card { background: #1e1f1c; border: 1px solid #2a2b28; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+  .mp-label { color: #8a8b85; font-size: 8px; font-weight: 500; letter-spacing: 0.7px; text-transform: uppercase; margin-bottom: 4px; }
+  .mp-amount { color: #f2f0eb; font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+  .mp-divider { height: 1px; background: #2a2b28; margin-bottom: 8px; }
+  .mp-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+  .mp-row:last-child { margin-bottom: 0; }
+  .mp-concept-name { color: #f2f0eb; font-size: 10px; font-weight: 500; }
+  .mp-concept-period { color: #8a8b85; font-size: 8.5px; }
+  .mp-right { display: flex; align-items: center; gap: 5px; }
+  .mp-badge { font-size: 7.5px; font-weight: 600; padding: 2px 6px; border-radius: 8px; white-space: nowrap; }
+  .mp-badge-pendiente { background: rgba(186,117,23,0.2); color: #EF9F27; }
+  .mp-badge-verificacion { background: rgba(55,138,221,0.18); color: #85B7EB; }
+  .mp-badge-verificado { background: rgba(99,153,34,0.2); color: #97C459; }
+  .mp-concept-amount { color: #f2f0eb; font-size: 10px; font-weight: 600; }
+
+  .mp-section-label { color: #8a8b85; font-size: 8px; font-weight: 500; letter-spacing: 0.7px; text-transform: uppercase; margin-bottom: 8px; }
+  .mp-month-nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 10px; }
+  .mp-month-nav span { color: #f2f0eb; font-size: 11px; font-weight: 500; }
+  .mp-chevron { color: #8a8b85; font-size: 10px; }
+
+  .mp-payment-row { border: 1px solid #2a2b28; border-radius: 10px; padding: 9px 10px; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; }
+  .mp-pay-name { color: #f2f0eb; font-size: 10px; font-weight: 500; }
+  .mp-pay-sub { color: #8a8b85; font-size: 8px; }
+  .mp-pay-amount { color: #a3d5d0; font-size: 11px; font-weight: 700; text-align: right; }
+  .mp-pay-method { color: #8a8b85; font-size: 8px; text-align: right; }
+
+  @media (max-width: 640px) {
+    .fmodal { grid-template-columns: 1fr; max-height: 85vh; overflow-y: auto; }
+    .fmodal-info { border-right: none; border-bottom: 1px solid var(--border); padding: 2rem; }
+    .fmodal-preview { padding: 1.5rem; }
+    .phone-frame { width: 200px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">domo</a>
+  <ul class="nav-links">
+    <li><a href="#funciones">Funciones</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#socios">Programa de socios</a></li>
+    <li><a href="https://domo-comunidad-unida.lovable.app/auth" class="nav-cta">Comenzar</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">Ahora disponible en Guatemala</div>
+  <h1>Tu comunidad,<br><em>sin el caos</em></h1>
+  <p class="hero-sub">Domo reemplaza los grupos de WhatsApp y las hojas de Excel con una plataforma diseñada para comunidades cerradas en Guatemala.</p>
+  <div class="hero-actions">
+    <a href="https://domo-comunidad-unida.lovable.app/auth" class="btn-primary">Solicitar demo gratis</a>
+    <a href="#funciones" class="btn-outline">Ver funciones</a>
+  </div>
+  <div class="hero-scroll">
+    <span>Descubre más</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<section class="problem fade-up">
+  <div class="section-label">El problema</div>
+  <div class="problem-grid">
+    <div class="problem-text">
+      <h2>¿Tu junta todavía usa WhatsApp y Excel?</h2>
+      <p>La mayoría de residenciales en Guatemala gestionan su comunidad con herramientas que no fueron diseñadas para eso.</p>
+      <ul class="pain-list">
+        <li>Pagos de cuotas imposibles de rastrear sin una hoja de cálculo</li>
+        <li>Quejas y solicitudes perdidas en grupos de WhatsApp</li>
+        <li>Sin transparencia financiera real para los residentes</li>
+        <li>La junta carga con todo el trabajo administrativo sola</li>
+        <li>Sin historial ni trazabilidad de decisiones</li>
+      </ul>
+    </div>
+    <div class="problem-visual">
+      <div class="chat-bubble">
+        <div class="chat-name">Vecino — Grupo Residencial 🏡</div>
+        <div class="chat-text">Buenas, ya pagué la cuota de marzo, ¿cómo confirmo?</div>
+      </div>
+      <div class="chat-bubble me">
+        <div class="chat-name">Tesorera</div>
+        <div class="chat-text">Hola, me puedes mandar la foto del comprobante por acá o al 5555-1234 🙏</div>
+      </div>
+      <div class="chat-bubble">
+        <div class="chat-name">Otro vecino</div>
+        <div class="chat-text">Oigan y lo del portón? sigo esperando respuesta desde hace 2 semanas 😤</div>
+      </div>
+      <div class="excel-mock">
+        <div class="excel-row">
+          <div class="excel-cell header">Unidad</div>
+          <div class="excel-cell header">Ene</div>
+          <div class="excel-cell header">Feb</div>
+          <div class="excel-cell header">Mar</div>
+        </div>
+        <div class="excel-row">
+          <div class="excel-cell">Casa 5-42</div>
+          <div class="excel-cell">✓</div>
+          <div class="excel-cell">✓</div>
+          <div class="excel-cell late">??</div>
+        </div>
+        <div class="excel-row">
+          <div class="excel-cell">Casa 5-44</div>
+          <div class="excel-cell">✓</div>
+          <div class="excel-cell late">mora</div>
+          <div class="excel-cell late">mora</div>
+        </div>
+        <div class="excel-row">
+          <div class="excel-cell">Casa 5-46</div>
+          <div class="excel-cell late">??</div>
+          <div class="excel-cell">✓</div>
+          <div class="excel-cell late">??</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="funciones">
+  <div class="features-header fade-up">
+    <div class="section-label">Funciones</div>
+    <h2>Todo lo que tu comunidad necesita</h2>
+    <p>Una sola plataforma para la junta y los residentes. Sin apps adicionales, sin configuraciones complicadas.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card highlight fade-up" onclick="openModal('cobros')">
+      <div class="feature-icon">💳</div>
+      <h3>Cobros y pagos</h3>
+      <p>Los residentes suben su comprobante de transferencia. La junta verifica con un clic. Historial completo de pagos por unidad, sin hojas de Excel.</p>
+      <span class="feature-tag">Reemplaza Excel</span>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon">📢</div>
+      <h3>Muro de anuncios</h3>
+      <p>Publica comunicados, eventos y encuestas. Los residentes votan, comentan y se mantienen informados. Todo queda registrado.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon">🎟</div>
+      <h3>Sistema de tickets</h3>
+      <p>Quejas, mantenimiento, consultas y seguridad. La junta gestiona con un tablero Kanban. Nada se pierde.</p>
+      <span class="feature-tag">Adiós WhatsApp</span>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon">📊</div>
+      <h3>Transparencia financiera</h3>
+      <p>Ingresos, gastos, presupuesto por categoría y saldo real. Los residentes ven en qué se usa su cuota. La junta reporta sin esfuerzo.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon">💬</div>
+      <h3>Mensajería interna</h3>
+      <p>Comunicación directa entre residentes y la junta. Privada, organizada y con historial. No más números personales en grupos.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon">📋</div>
+      <h3>Directorio de unidades</h3>
+      <p>Información de cada unidad y residente en un solo lugar. La junta puede verificar DPI, gestionar roles y contactar a cualquier vecino al instante.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon">📈</div>
+      <h3>Reportes para la asamblea</h3>
+      <p>Genera el reporte financiero mensual en un clic. Listo para presentar en asamblea, sin Excel, sin preparación manual.</p>
+      <span class="feature-tag">Reemplaza Excel</span>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon">🛡</div>
+      <h3>Verificación de identidad</h3>
+      <p>Onboarding con foto del DPI. Google Vision API verifica el documento automáticamente. Solo vecinos reales en tu plataforma.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon">🔗</div>
+      <h3>Invitación por link</h3>
+      <p>La junta genera un link único. Los residentes se registran solos. Sin formularios manuales, sin imports de Excel.</p>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="como-funciona">
+  <div class="how-inner">
+    <div class="how-header fade-up">
+      <div class="section-label">¿Cómo funciona?</div>
+      <h2>De WhatsApp a Domo en días</h2>
+    </div>
+    <div class="steps">
+      <div class="step fade-up">
+        <div class="step-num">1</div>
+        <h3>El demo</h3>
+        <p>Te mostramos la plataforma con datos reales. Sin compromiso, sin tarjeta.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">2</div>
+        <h3>Configuración</h3>
+        <p>Creamos tu comunidad en Domo. Primeras 5 comunidades sin costo de setup.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">3</div>
+        <h3>Invitación</h3>
+        <p>La junta envía el link a los residentes. Se registran en minutos con su DPI.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">4</div>
+        <h3>Tu comunidad, organizada</h3>
+        <p>Pagos, tickets, anuncios y finanzas, todo en un solo lugar desde el primer día.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="precios">
+  <div class="section-label fade-up">Precios</div>
+  <h2 class="fade-up">Simple y sin sorpresas</h2>
+  <p class="pricing-sub fade-up">Sin contratos largos. Sin costos ocultos. Cancela cuando quieras.</p>
+  <div class="pricing-card fade-up">
+    <div class="pricing-badge">Plan comunidad</div>
+    <div class="pricing-amount">
+      <span class="pricing-currency">Q</span>
+      <span class="pricing-number">25</span>
+    </div>
+    <div class="pricing-unit">por unidad / mes</div>
+    <div class="pricing-setup">
+      Más <strong>Q50 por unidad</strong> de configuración inicial · <strong>Gratis para las primeras 5 comunidades</strong>
+    </div>
+    <ul class="pricing-features">
+      <li>Plataforma completa para junta y residentes</li>
+      <li>Cobros, tickets, anuncios, mensajería y directorio</li>
+      <li>Transparencia financiera en tiempo real</li>
+      <li>Verificación de identidad con DPI incluida</li>
+      <li>Onboarding asistido para tus residentes</li>
+      <li>Soporte directo con el equipo de Domo</li>
+      <li>Sin límite de usuarios ni mensajes</li>
+    </ul>
+    <a href="https://domo-comunidad-unida.lovable.app/auth" class="btn-primary">Solicitar demo gratis</a>
+    <p class="pricing-note">Una comunidad de 20 unidades paga Q500/mes. Menos que una pizza para toda la junta.</p>
+  </div>
+</section>
+
+<section class="partner" id="socios">
+  <div class="partner-inner">
+    <div class="partner-grid">
+      <div class="partner-text fade-up">
+        <div class="section-label">Programa de socios</div>
+        <h2>¿Conoces juntas directivas?<br><em>Gana con Domo.</em></h2>
+        <p>Si tienes acceso a residenciales cerradas — como administrador de propiedades, contador, agente inmobiliario, o simplemente eres parte de una junta — puedes ganar una comisión por cada comunidad que incorpores a Domo.</p>
+        <p>No es trabajo de ventas. Es una introducción. Nosotros hacemos el resto.</p>
+        <div class="partner-who">
+          <p><strong>¿Para quién es esto?</strong> Administradores de propiedades, contadores de HOAs, agentes inmobiliarios, miembros de juntas, desarrolladoras de residenciales, o cualquier persona con acceso a una junta directiva.</p>
+        </div>
+      </div>
+      <div class="partner-cards fade-up">
+        <div class="partner-card">
+          <div class="partner-card-label">Tu comisión</div>
+          <h4>30% del setup + 1er mes</h4>
+          <p>Por cada comunidad que incorpores, recibes el 30% del pago inicial de configuración más el primer mes recurrente. Pago único, sin complicaciones.</p>
+        </div>
+        <div class="partner-card">
+          <div class="partner-card-label">Ejemplo</div>
+          <h4>Comunidad de 30 unidades</h4>
+          <p>Setup: Q1,500 · 1er mes: Q750 · Total: Q2,250<br>Tu comisión: <strong style="color: var(--teal)">Q675</strong> por una sola introducción.</p>
+        </div>
+        <div class="partner-card">
+          <div class="partner-card-label">Así funciona</div>
+          <h4>Solo conecta, nosotros cerramos</h4>
+          <p>Nos presentas a la junta directiva. Nosotros hacemos el demo, el onboarding y el soporte. Tú cobras tu comisión cuando firman.</p>
+        </div>
+        <a href="mailto:hola@domogt.com?subject=Quiero ser socio de Domo" class="btn-primary" style="margin-top:0.5rem;">Convertirme en socio →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust fade-up">
+  <div class="trust-quote">
+    Llevábamos tres años con el mismo Excel y el mismo grupo de WhatsApp. Con Domo, la primera asamblea fue diferente: los vecinos llegaron con sus pagos al día y sin quejas sin resolver.
+  </div>
+  <div class="trust-author">
+    <strong>Carlos P.</strong> — Presidente de junta, Residencial Bosque Verde, Zona 16
+  </div>
+  <div class="trust-stats">
+    <div class="stat">
+      <h3>100%</h3>
+      <p>Guatemalteco, para Guatemala</p>
+    </div>
+    <div class="stat">
+      <h3>Q0</h3>
+      <p>Setup para las primeras 5 comunidades</p>
+    </div>
+    <div class="stat">
+      <h3>1 día</h3>
+      <p>Para tener tu comunidad funcionando</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="cta-glow"></div>
+  <div class="section-label fade-up">Empieza hoy</div>
+  <h2 class="fade-up">Tu comunidad merece<br><em>algo mejor</em></h2>
+  <p class="fade-up">El demo es gratis, sin compromiso. Te mostramos cómo Domo funciona con los datos reales de tu comunidad.</p>
+  <div class="fade-up">
+    <a href="https://domo-comunidad-unida.lovable.app/auth" class="btn-primary">Solicitar demo gratis</a>
+  </div>
+</section>
+
+<footer>
+  <a href="#" class="footer-logo">domo</a>
+  <div class="footer-text">Tu comunidad, en un solo lugar · Guatemala, 2026</div>
+  <div class="footer-text">
+    <a href="mailto:hola@domogt.com" style="color: var(--teal); text-decoration: none;">hola@domogt.com</a>
+  </div>
+</footer>
+
+<!-- ── COBROS Y PAGOS MODAL ── -->
+<div class="fmodal-overlay" id="modal-cobros" onclick="handleOverlayClick(event, 'cobros')">
+  <div class="fmodal">
+    <button class="fmodal-close" onclick="closeModal('cobros')">✕</button>
+
+    <div class="fmodal-info">
+      <div class="feature-icon">💳</div>
+      <h2>Cobros y pagos</h2>
+      <p>Olvídate del Excel y los comprobantes por WhatsApp. Los residentes suben su transferencia directamente en Domo, y la junta verifica con un solo clic.</p>
+      <ul class="fmodal-points">
+        <li>Saldo pendiente visible en tiempo real para cada residente</li>
+        <li>Estado por concepto: pendiente, en verificación, verificado</li>
+        <li>Historial completo de pagos con filtro por mes</li>
+        <li>La junta ve todos los cobros desde Admin Finanzas</li>
+        <li>Sin transferencias manuales ni hojas de cálculo</li>
+      </ul>
+    </div>
+
+    <div class="fmodal-preview">
+      <div class="phone-frame">
+        <div class="mp-body">
+          <div class="mp-header">
+            <span class="mp-title">Mis Pagos</span>
+            <span class="mp-btn">Pagar Ahora</span>
+          </div>
+
+          <div class="mp-card">
+            <div class="mp-label">Saldo Pendiente</div>
+            <div class="mp-amount">Q500.00</div>
+            <div class="mp-divider"></div>
+            <div class="mp-row">
+              <div>
+                <div class="mp-concept-name">Seguridad</div>
+                <div class="mp-concept-period">Período: abr 2026</div>
+              </div>
+              <div class="mp-right">
+                <span class="mp-badge mp-badge-pendiente">Pendiente</span>
+                <span class="mp-concept-amount">Q350.00</span>
+              </div>
+            </div>
+            <div class="mp-row">
+              <div>
+                <div class="mp-concept-name">Mantenimiento</div>
+                <div class="mp-concept-period">Período: abr 2026</div>
+              </div>
+              <div class="mp-right">
+                <span class="mp-badge mp-badge-verificacion">En verificación</span>
+                <span class="mp-concept-amount">Q150.00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mp-section-label">Historial de Pagos</div>
+          <div class="mp-month-nav">
+            <span class="mp-chevron">‹</span>
+            <span>Abril 2026</span>
+            <span class="mp-chevron">›</span>
+          </div>
+
+          <div class="mp-payment-row">
+            <div>
+              <div class="mp-pay-name">Agua</div>
+              <div class="mp-pay-sub">Abr 2026 · Pagado el 3 abr</div>
+            </div>
+            <div>
+              <div style="text-align:right; margin-bottom:2px;">
+                <span class="mp-badge mp-badge-verificado">Verificado</span>
+              </div>
+              <div class="mp-pay-amount">Q150.00</div>
+              <div class="mp-pay-method">Transferencia</div>
+            </div>
+          </div>
+
+          <div class="mp-payment-row">
+            <div>
+              <div class="mp-pay-name">Seguridad</div>
+              <div class="mp-pay-sub">Mar 2026 · Pagado el 28 mar</div>
+            </div>
+            <div>
+              <div style="text-align:right; margin-bottom:2px;">
+                <span class="mp-badge mp-badge-verificado">Verificado</span>
+              </div>
+              <div class="mp-pay-amount">Q350.00</div>
+              <div class="mp-pay-method">Transferencia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  function openModal(id) {
+    document.getElementById('modal-' + id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(id) {
+    document.getElementById('modal-' + id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e, id) {
+    if (e.target === e.currentTarget) closeModal(id);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.fmodal-overlay.open').forEach(m => {
+        m.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
