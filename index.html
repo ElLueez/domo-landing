@@ -843,7 +843,7 @@
       <p>Genera el reporte financiero mensual en un clic. Listo para presentar en asamblea, sin Excel, sin preparación manual.</p>
       <span class="feature-tag">Reemplaza Excel</span>
     </div>
-    <div class="feature-card fade-up">
+    <div class="feature-card fade-up" onclick="openModal('verificacion')">
       <div class="feature-icon">🛡</div>
       <h3>Verificación de identidad</h3>
       <p>Onboarding con foto del DPI. Google Vision API verifica el documento automáticamente. Solo vecinos reales en tu plataforma.</p>
@@ -1836,6 +1836,151 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── VERIFICACION MODAL ── -->
+<style>
+  .ver-body { padding: 14px 12px; }
+  .ver-step { display: flex; gap: 10px; margin-bottom: 8px; position: relative; }
+  .ver-step:last-child { margin-bottom: 0; }
+  .ver-line-col { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 20px; }
+  .ver-dot { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 8px; font-weight: 700; }
+  .ver-dot-pending { background: #1e1f1c; border: 1.5px solid #2a2b28; color: #8a8b85; }
+  .ver-dot-active { background: rgba(163,213,208,0.15); border: 1.5px solid #a3d5d0; color: #a3d5d0; }
+  .ver-dot-active svg { width: 10px; height: 10px; stroke: #a3d5d0; fill: none; stroke-width: 2.5; }
+  .ver-dot-done { background: rgba(74,198,150,0.15); border: 1.5px solid #4ade80; }
+  .ver-dot-done svg { width: 10px; height: 10px; stroke: #4ade80; fill: none; stroke-width: 2.5; }
+  .ver-connector { width: 1.5px; flex: 1; background: #2a2b28; margin: 2px 0; min-height: 10px; }
+  .ver-card { flex: 1; background: #1e1f1c; border: 1px solid #2a2b28; border-radius: 10px; padding: 10px; }
+  .ver-card-active { border-color: rgba(163,213,208,0.25); }
+  .ver-card-done { border-color: rgba(74,198,150,0.2); }
+  .ver-step-label { font-size: 7px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: #8a8b85; margin-bottom: 4px; }
+  .ver-step-label-active { color: #a3d5d0; }
+  .ver-step-label-done { color: #4ade80; }
+
+  /* Step 1 - DPI upload */
+  .ver-dpi-frame { border: 1.5px dashed #2a2b28; border-radius: 7px; padding: 8px; margin-bottom: 7px; display: flex; align-items: center; gap: 7px; }
+  .ver-dpi-icon { width: 30px; height: 20px; border: 1px solid #3a3b38; border-radius: 3px; background: #121314; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ver-dpi-icon svg { width: 12px; height: 12px; stroke: #8a8b85; fill: none; stroke-width: 1.5; }
+  .ver-dpi-text { color: #8a8b85; font-size: 7.5px; line-height: 1.4; }
+  .ver-upload-btn { width: 100%; background: #a3d5d0; color: #0d1f1e; font-size: 8px; font-weight: 600; padding: 5px; border-radius: 6px; text-align: center; }
+
+  /* Step 2 - scanning */
+  .ver-scan-inner { display: flex; align-items: center; gap: 8px; }
+  .ver-pulse-ring { width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(163,213,208,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; animation: verPulse 1.4s ease-in-out infinite; }
+  @keyframes verPulse {
+    0%, 100% { border-color: rgba(163,213,208,0.3); }
+    50% { border-color: rgba(163,213,208,0.8); box-shadow: 0 0 0 4px rgba(163,213,208,0.08); }
+  }
+  .ver-pulse-ring svg { width: 14px; height: 14px; stroke: #a3d5d0; fill: none; stroke-width: 1.8; }
+  .ver-scan-text { flex: 1; }
+  .ver-scan-title { color: #f2f0eb; font-size: 9px; font-weight: 600; margin-bottom: 2px; }
+  .ver-scan-sub { color: #8a8b85; font-size: 7.5px; }
+  .ver-scan-bar { height: 3px; background: #2a2b28; border-radius: 3px; margin-top: 7px; overflow: hidden; }
+  .ver-scan-fill { height: 3px; width: 65%; background: linear-gradient(to right, #a3d5d0, rgba(163,213,208,0.3)); border-radius: 3px; animation: verScan 1.8s ease-in-out infinite; }
+  @keyframes verScan {
+    0% { width: 20%; }
+    50% { width: 75%; }
+    100% { width: 20%; }
+  }
+
+  /* Step 3 - verified */
+  .ver-result { display: flex; align-items: center; gap: 8px; }
+  .ver-check-circle { width: 28px; height: 28px; border-radius: 50%; background: rgba(74,198,150,0.12); border: 1.5px solid #4ade80; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ver-check-circle svg { width: 13px; height: 13px; stroke: #4ade80; fill: none; stroke-width: 2.5; }
+  .ver-result-info { flex: 1; }
+  .ver-result-name { color: #f2f0eb; font-size: 9px; font-weight: 600; margin-bottom: 1px; }
+  .ver-result-cui { color: #8a8b85; font-size: 7.5px; font-family: monospace; }
+  .ver-access-badge { display: inline-block; background: rgba(74,198,150,0.12); border: 1px solid rgba(74,198,150,0.3); color: #4ade80; font-size: 7px; font-weight: 600; padding: 2px 7px; border-radius: 10px; margin-top: 5px; letter-spacing: 0.3px; }
+</style>
+
+<div class="fmodal-overlay" id="modal-verificacion" onclick="handleOverlayClick(event, 'verificacion')">
+  <div class="fmodal">
+    <button class="fmodal-close" onclick="closeModal('verificacion')">✕</button>
+
+    <div class="fmodal-info">
+      <div class="feature-icon">🛡</div>
+      <h2>Verificación de identidad</h2>
+      <p>Cada residente que se une a Domo es verificado con su DPI guatemalteco. Google Vision API lee el documento automáticamente — sin revisión manual, sin formularios extra.</p>
+      <ul class="fmodal-points">
+        <li>El residente sube foto del frente y reverso de su DPI</li>
+        <li>Google Vision API extrae nombre y CUI automáticamente</li>
+        <li>El sistema valida que sea un DPI guatemalteco auténtico</li>
+        <li>La junta aprueba o rechaza con un clic desde el directorio</li>
+        <li>Solo vecinos verificados acceden a la plataforma</li>
+      </ul>
+    </div>
+
+    <div class="fmodal-preview">
+      <div class="phone-frame" style="width:240px;flex-shrink:0;">
+        <div class="ver-body">
+
+          <!-- Step 1: Upload -->
+          <div class="ver-step">
+            <div class="ver-line-col">
+              <div class="ver-dot ver-dot-done">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="ver-connector"></div>
+            </div>
+            <div class="ver-card ver-card-done">
+              <div class="ver-step-label ver-step-label-done">Paso 1 — DPI subido</div>
+              <div class="ver-dpi-frame">
+                <div class="ver-dpi-icon">
+                  <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2"/><line x1="13" y1="10" x2="19" y2="10"/><line x1="13" y1="13" x2="19" y2="13"/></svg>
+                </div>
+                <div class="ver-dpi-text">dpi_frente.jpg · dpi_reverso.jpg<br><span style="color:#4ade80;">Imágenes recibidas</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Scanning -->
+          <div class="ver-step">
+            <div class="ver-line-col">
+              <div class="ver-dot ver-dot-active">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              </div>
+              <div class="ver-connector"></div>
+            </div>
+            <div class="ver-card ver-card-active">
+              <div class="ver-step-label ver-step-label-active">Paso 2 — Verificando</div>
+              <div class="ver-scan-inner">
+                <div class="ver-pulse-ring">
+                  <svg viewBox="0 0 24 24"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                </div>
+                <div class="ver-scan-text">
+                  <div class="ver-scan-title">Google Vision API</div>
+                  <div class="ver-scan-sub">Leyendo documento...</div>
+                </div>
+              </div>
+              <div class="ver-scan-bar"><div class="ver-scan-fill"></div></div>
+            </div>
+          </div>
+
+          <!-- Step 3: Verified -->
+          <div class="ver-step">
+            <div class="ver-line-col">
+              <div class="ver-dot ver-dot-pending">3</div>
+            </div>
+            <div class="ver-card">
+              <div class="ver-step-label">Paso 3 — Acceso</div>
+              <div class="ver-result">
+                <div class="ver-check-circle" style="opacity:0.35;">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="ver-result-info">
+                  <div class="ver-result-name" style="color:#8a8b85;">Diego Morales</div>
+                  <div class="ver-result-cui">4521 ····· ····</div>
+                  <div class="ver-access-badge" style="opacity:0.35;">Acceso concedido</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
