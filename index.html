@@ -340,6 +340,42 @@
   .feature-card h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 400; margin-bottom: 0.75rem; color: var(--text); }
   .feature-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
 
+  /* Modal preview glow */
+  .fmodal-preview {
+    padding: 2rem;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .fmodal-preview::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(163,213,208,0.10) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .fmodal-preview .phone-frame { position: relative; z-index: 1; }
+
+  /* Ver más link on feature cards */
+  .feature-card .feature-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: var(--teal);
+    opacity: 0.8;
+    transition: opacity 0.2s, gap 0.2s;
+    cursor: pointer;
+  }
+  .feature-card:hover .feature-more { opacity: 1; gap: 6px; }
+
   .feature-tag {
     display: inline-block;
     margin-top: 1rem;
@@ -652,15 +688,6 @@
   }
   .fmodal-points li::before { content: '✓'; color: var(--teal); flex-shrink: 0; margin-top: 0.05rem; }
 
-  .fmodal-preview {
-    padding: 2rem;
-    background: var(--bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
   /* Phone frame */
   .phone-frame {
     width: 240px;
@@ -810,48 +837,57 @@
       <h3>Cobros y pagos</h3>
       <p>Los residentes suben su comprobante de transferencia. La junta verifica con un clic. Historial completo de pagos por unidad, sin hojas de Excel.</p>
       <span class="feature-tag">Reemplaza Excel</span>
+      <span class="feature-more">Ver más <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
     </div>
     <div class="feature-card fade-up" onclick="openModal('muro')">
       <div class="feature-icon">📢</div>
       <h3>Muro de anuncios</h3>
       <p>Publica comunicados, eventos y encuestas. Los residentes votan, comentan y se mantienen informados. Todo queda registrado.</p>
+      <span class="feature-more">Ver más <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
     </div>
     <div class="feature-card fade-up" onclick="openModal('tickets')">
       <div class="feature-icon">🎟</div>
       <h3>Sistema de tickets</h3>
       <p>Quejas, mantenimiento, consultas y seguridad. La junta gestiona con un tablero Kanban. Nada se pierde.</p>
       <span class="feature-tag">Adiós WhatsApp</span>
+      <span class="feature-more">Ver más <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
     </div>
     <div class="feature-card fade-up" onclick="openModal('finanzas')">
       <div class="feature-icon">📊</div>
       <h3>Transparencia financiera</h3>
       <p>Ingresos, gastos, presupuesto por categoría y saldo real. Los residentes ven en qué se usa su cuota. La junta reporta sin esfuerzo.</p>
+      <span class="feature-more">Ver más <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
     </div>
     <div class="feature-card fade-up" onclick="openModal('mensajes')">
       <div class="feature-icon">💬</div>
       <h3>Mensajería interna</h3>
       <p>Comunicación directa entre residentes y la junta. Privada, organizada y con historial. No más números personales en grupos.</p>
+      <span class="feature-more">Ver más <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
     </div>
     <div class="feature-card fade-up" onclick="openModal('directorio')">
       <div class="feature-icon">📋</div>
       <h3>Directorio de unidades</h3>
       <p>Información de cada unidad y residente en un solo lugar. La junta puede verificar DPI, gestionar roles y contactar a cualquier vecino al instante.</p>
+      <span class="feature-more">Ver más <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
     </div>
     <div class="feature-card fade-up" onclick="openModal('reportes')">
       <div class="feature-icon">📈</div>
       <h3>Reportes para la asamblea</h3>
       <p>Genera el reporte financiero mensual en un clic. Listo para presentar en asamblea, sin Excel, sin preparación manual.</p>
       <span class="feature-tag">Reemplaza Excel</span>
+      <span class="feature-more">Ver más <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
     </div>
     <div class="feature-card fade-up" onclick="openModal('verificacion')">
       <div class="feature-icon">🛡</div>
       <h3>Verificación de identidad</h3>
       <p>Onboarding con foto del DPI. Google Vision API verifica el documento automáticamente. Solo vecinos reales en tu plataforma.</p>
+      <span class="feature-more">Ver más <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
     </div>
     <div class="feature-card fade-up" onclick="openModal('invitacion')">
       <div class="feature-icon">🔗</div>
       <h3>Invitación por link</h3>
       <p>La junta genera un link único. Los residentes se registran solos. Sin formularios manuales, sin imports de Excel.</p>
+      <span class="feature-more">Ver más <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
     </div>
   </div>
 </section>
