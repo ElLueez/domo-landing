@@ -316,6 +316,8 @@
     padding: 2rem;
     transition: border-color 0.3s, transform 0.3s;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
   }
 
   .feature-card:hover { border-color: rgba(163,213,208,0.3); transform: translateY(-3px); }
@@ -338,7 +340,7 @@
   }
 
   .feature-card h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 400; margin-bottom: 0.75rem; color: var(--text); }
-  .feature-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+  .feature-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; flex: 1; }
 
   /* Modal preview glow */
   .fmodal-preview {
