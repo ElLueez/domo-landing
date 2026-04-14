@@ -832,7 +832,7 @@
       <h3>Mensajería interna</h3>
       <p>Comunicación directa entre residentes y la junta. Privada, organizada y con historial. No más números personales en grupos.</p>
     </div>
-    <div class="feature-card fade-up">
+    <div class="feature-card fade-up" onclick="openModal('directorio')">
       <div class="feature-icon">📋</div>
       <h3>Directorio de unidades</h3>
       <p>Información de cada unidad y residente en un solo lugar. La junta puede verificar DPI, gestionar roles y contactar a cualquier vecino al instante.</p>
@@ -1533,6 +1533,154 @@
                 <div class="msg-thread-subject">Consulta sobre cuota de mantenimiento</div>
                 <div class="msg-thread-preview">Hola María, la cuota cubre el mantenimiento de áreas comunes...</div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DIRECTORIO MODAL ── -->
+<style>
+  .dir-body { padding: 12px; }
+  .dir-title { color: #f2f0eb; font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .dir-subtitle { color: #8a8b85; font-size: 8px; margin-bottom: 10px; }
+  .dir-search-row { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+  .dir-search { flex: 1; background: #121314; border: 1px solid #2a2b28; border-radius: 8px; height: 26px; display: flex; align-items: center; gap: 5px; padding: 0 8px; }
+  .dir-search svg { width: 9px; height: 9px; stroke: #8a8b85; fill: none; stroke-width: 2; flex-shrink: 0; }
+  .dir-search span { color: #8a8b85; font-size: 8px; }
+  .dir-filter-btn { width: 26px; height: 26px; border: 1px solid #2a2b28; border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .dir-filter-btn svg { width: 11px; height: 11px; stroke: #8a8b85; fill: none; stroke-width: 1.8; }
+  .dir-table { width: 100%; overflow: hidden; border: 1px solid #2a2b28; border-radius: 8px; }
+  .dir-thead { background: #1e1f1c; }
+  .dir-th { color: #8a8b85; font-size: 6.5px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 5px 8px; text-align: left; border-bottom: 1px solid #2a2b28; white-space: nowrap; }
+  .dir-th:first-child { width: 20px; padding: 5px 6px; }
+  .dir-row { border-bottom: 1px solid #2a2b28; display: flex; align-items: stretch; }
+  .dir-row:last-child { border-bottom: none; }
+  .dir-cell { padding: 7px 8px; font-size: 8.5px; color: #f2f0eb; display: flex; align-items: center; }
+  .dir-cell:first-child { width: 20px; padding: 7px 6px; flex-shrink: 0; }
+  .dir-cell-unit { flex: 0 0 110px; flex-direction: column; align-items: flex-start; gap: 1px; }
+  .dir-cell-resident { flex: 0 0 80px; }
+  .dir-unit-addr { display: flex; align-items: center; gap: 3px; color: #f2f0eb; font-size: 8.5px; }
+  .dir-unit-addr svg { width: 9px; height: 9px; stroke: #8a8b85; fill: none; stroke-width: 1.8; flex-shrink: 0; }
+  .dir-unit-type { color: #8a8b85; font-size: 7.5px; padding-left: 12px; }
+  .dir-checkbox { width: 10px; height: 10px; border: 1px solid #2a2b28; border-radius: 2px; flex-shrink: 0; }
+  .dir-role-badge { font-size: 7px; font-weight: 600; padding: 1px 5px; border-radius: 8px; background: rgba(163,213,208,0.12); color: #a3d5d0; margin-left: 3px; }
+</style>
+
+<div class="fmodal-overlay" id="modal-directorio" onclick="handleOverlayClick(event, 'directorio')">
+  <div class="fmodal">
+    <button class="fmodal-close" onclick="closeModal('directorio')">✕</button>
+
+    <div class="fmodal-info">
+      <div class="feature-icon">📋</div>
+      <h2>Directorio de unidades</h2>
+      <p>Un registro completo de todas las unidades y residentes de la comunidad. La junta tiene visibilidad total y puede actuar al instante.</p>
+      <ul class="fmodal-points">
+        <li>Tabla completa con todas las unidades y residentes activos</li>
+        <li>Estado de pago por unidad: al día o moroso</li>
+        <li>Tickets activos visibles directamente en el directorio</li>
+        <li>Selección múltiple para enviar mensajes masivos o exportar CSV</li>
+        <li>Clic en un residente abre su perfil completo con datos y DPI</li>
+      </ul>
+    </div>
+
+    <div class="fmodal-preview">
+      <div class="phone-frame" style="width:240px;flex-shrink:0;">
+        <div class="dir-body">
+          <div class="dir-title">Directorio de Unidades</div>
+          <div class="dir-subtitle">11 unidades · 13 residentes</div>
+
+          <div class="dir-search-row">
+            <div class="dir-search">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span>Buscar por dirección o residente...</span>
+            </div>
+            <div class="dir-filter-btn">
+              <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+            </div>
+          </div>
+
+          <div class="dir-table">
+            <div class="dir-thead">
+              <div style="display:flex;">
+                <div class="dir-th" style="width:20px;"></div>
+                <div class="dir-th" style="flex:0 0 110px;">Unidad</div>
+                <div class="dir-th" style="flex:0 0 80px;">Residentes</div>
+              </div>
+            </div>
+
+            <div class="dir-row">
+              <div class="dir-cell" style="width:20px;flex-shrink:0;"><div class="dir-checkbox"></div></div>
+              <div class="dir-cell dir-cell-unit">
+                <div class="dir-unit-addr">
+                  <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:90px;">16 Calle 5-50, Z. 16...</span>
+                </div>
+                <div class="dir-unit-type">Casa</div>
+              </div>
+              <div class="dir-cell dir-cell-resident">Diego Morales</div>
+            </div>
+
+            <div class="dir-row">
+              <div class="dir-cell" style="width:20px;flex-shrink:0;"><div class="dir-checkbox"></div></div>
+              <div class="dir-cell dir-cell-unit">
+                <div class="dir-unit-addr">
+                  <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:90px;">16 Calle 5-42, Z. 16...</span>
+                </div>
+                <div class="dir-unit-type">Casa</div>
+              </div>
+              <div class="dir-cell dir-cell-resident">Carlos Pérez <span class="dir-role-badge">P</span></div>
+            </div>
+
+            <div class="dir-row">
+              <div class="dir-cell" style="width:20px;flex-shrink:0;"><div class="dir-checkbox"></div></div>
+              <div class="dir-cell dir-cell-unit">
+                <div class="dir-unit-addr">
+                  <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:90px;">16 Calle 5-44, Z. 16...</span>
+                </div>
+                <div class="dir-unit-type">Casa</div>
+              </div>
+              <div class="dir-cell dir-cell-resident">María López</div>
+            </div>
+
+            <div class="dir-row">
+              <div class="dir-cell" style="width:20px;flex-shrink:0;"><div class="dir-checkbox"></div></div>
+              <div class="dir-cell dir-cell-unit">
+                <div class="dir-unit-addr">
+                  <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:90px;">16 Calle 5-46, Z. 16...</span>
+                </div>
+                <div class="dir-unit-type">Casa</div>
+              </div>
+              <div class="dir-cell dir-cell-resident">Roberto Ramírez</div>
+            </div>
+
+            <div class="dir-row">
+              <div class="dir-cell" style="width:20px;flex-shrink:0;"><div class="dir-checkbox"></div></div>
+              <div class="dir-cell dir-cell-unit">
+                <div class="dir-unit-addr">
+                  <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:90px;">16 Calle 5-48, Z. 16...</span>
+                </div>
+                <div class="dir-unit-type">Casa</div>
+              </div>
+              <div class="dir-cell dir-cell-resident">Andrea Castillo</div>
+            </div>
+
+            <div class="dir-row">
+              <div class="dir-cell" style="width:20px;flex-shrink:0;"><div class="dir-checkbox"></div></div>
+              <div class="dir-cell dir-cell-unit">
+                <div class="dir-unit-addr">
+                  <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:90px;">16 Calle 5-52, Z. 16...</span>
+                </div>
+                <div class="dir-unit-type">Casa</div>
+              </div>
+              <div class="dir-cell dir-cell-resident" style="color:#8a8b85;font-size:7.5px;font-style:italic;">Sin residentes</div>
             </div>
           </div>
         </div>
