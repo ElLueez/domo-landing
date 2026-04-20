@@ -544,7 +544,7 @@
 
 <script>
   const SUPABASE_URL = 'https://uhursezocqgpysgzpnvj.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVodXJzZXpvY3FncHlzZ3pwbnZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI2MDgwMzAsImV4cCI6MjA1ODE4NDAzMH0.YVuFn9FcFITaigH8NHR8mhNIhBTvF52NiJLFZHGbSwE';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVodXJzZXpvY3FncHlzZ3pwbnZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2MzQ1OTEsImV4cCI6MjA4OTIxMDU5MX0.KU5PYhNH3dwDQIt21D8ax1kKiKpnUNx4ERACQ6-uMuc';
 
   document.getElementById('sociosForm').addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -584,7 +584,9 @@
     } catch (err) {
       btn.disabled = false;
       btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar solicitud';
-      alert('Error al enviar: ' + (err.message || String(err)) + '\n\nEscríbenos a hola@domogt.com');
+      alert('Error al enviar: ' + (err.message || String(err)) + '
+
+Escríbenos a hola@domogt.com');
     }
   });
 </script>
