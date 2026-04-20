@@ -412,7 +412,7 @@
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
     <span>Volver al inicio</span>
   </a>
-  <a href="https://app.domogt.com/socios/auth" class="nav-cta">Partners Hub</a>
+  <a href="https://app.domogt.com/auth" class="nav-cta">Iniciar sesión</a>
 </nav>
 
 <main>
@@ -468,10 +468,7 @@
   <div class="form-card">
     <div class="form-title">Quiero ser socio</div>
     <form id="sociosForm">
-      <input type="hidden" name="access_key" value="e527f9f3-5924-45d0-824e-dc204978f827">
-      <input type="hidden" name="subject" value="Nueva solicitud de socio — Domo">
-      <input type="hidden" name="from_name" value="Domo Landing Page">
-      <input type="checkbox" name="botcheck" style="display:none;">
+
 
       <div class="form-grid">
         <div class="form-group">
@@ -546,24 +543,43 @@
 </footer>
 
 <script>
+  const SUPABASE_URL = 'https://uhursezocqgpysgzpnvj.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVodXJzZXpvY3FncHlzZ3pwbnZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI2MDgwMzAsImV4cCI6MjA1ODE4NDAzMH0.YVuFn9FcFITaigH8NHR8mhNIhBTvF52NiJLFZHGbSwE';
+
   document.getElementById('sociosForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
     btn.innerHTML = '<svg viewBox="0 0 24 24" style="animation:spin 1s linear infinite;width:16px;height:16px;"><circle cx="12" cy="12" r="10" stroke-dasharray="30 60" fill="none" stroke="currentColor" stroke-width="2"/></svg> Enviando...';
 
-    const data = Object.fromEntries(new FormData(this));
+    const formData = new FormData(this);
+    const payload = {
+      nombre: formData.get('nombre'),
+      telefono: formData.get('telefono'),
+      correo: formData.get('correo'),
+      rol: formData.get('rol') || null,
+      comunidades: formData.get('comunidades') || null,
+      mensaje: formData.get('mensaje') || null,
+    };
+
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/socio_requests`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
       });
-      const result = await res.json();
-      if (result.success) {
+
+      if (res.ok) {
         document.getElementById('sociosForm').style.display = 'none';
         document.getElementById('successState').style.display = 'block';
-      } else { throw new Error(); }
+      } else {
+        throw new Error();
+      }
     } catch {
       btn.disabled = false;
       btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar solicitud';
