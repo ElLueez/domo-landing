@@ -543,51 +543,48 @@
 </footer>
 
 <script>
-  const SUPABASE_URL = 'https://uhursezocqgpysgzpnvj.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVodXJzZXpvY3FncHlzZ3pwbnZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2MzQ1OTEsImV4cCI6MjA4OTIxMDU5MX0.KU5PYhNH3dwDQIt21D8ax1kKiKpnUNx4ERACQ6-uMuc';
+  var SUPABASE_URL = 'https://uhursezocqgpysgzpnvj.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVodXJzZXpvY3FncHlzZ3pwbnZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2MzQ1OTEsImV4cCI6MjA4OTIxMDU5MX0.KU5PYhNH3dwDQIt21D8ax1kKiKpnUNx4ERACQ6-uMuc';
 
-  document.getElementById('sociosForm').addEventListener('submit', async function(e) {
+  document.getElementById('sociosForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const btn = document.getElementById('submitBtn');
+    var btn = document.getElementById('submitBtn');
     btn.disabled = true;
     btn.innerHTML = '<svg viewBox="0 0 24 24" style="animation:spin 1s linear infinite;width:16px;height:16px;"><circle cx="12" cy="12" r="10" stroke-dasharray="30 60" fill="none" stroke="currentColor" stroke-width="2"/></svg> Enviando...';
 
-    const formData = new FormData(this);
-    const payload = {
+    var formData = new FormData(e.target);
+    var payload = {
       nombre: formData.get('nombre'),
       telefono: formData.get('telefono') || null,
       correo: formData.get('correo'),
       rol: formData.get('rol') || null,
       comunidades: formData.get('comunidades') || null,
-      mensaje: formData.get('mensaje') || null,
+      mensaje: formData.get('mensaje') || null
     };
 
-    try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/socio_requests`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify(payload)
-      });
-
+    fetch(SUPABASE_URL + '/rest/v1/socio_requests', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    }).then(function(res) {
       if (res.ok) {
         document.getElementById('sociosForm').style.display = 'none';
         document.getElementById('successState').style.display = 'block';
       } else {
-        const errorBody = await res.text();
-        throw new Error('HTTP ' + res.status + ': ' + errorBody);
+        return res.text().then(function(body) {
+          throw new Error('HTTP ' + res.status + ': ' + body);
+        });
       }
-    } catch (err) {
+    }).catch(function(err) {
       btn.disabled = false;
       btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar solicitud';
-      alert('Error al enviar: ' + (err.message || String(err)) + '
-
-Escríbenos a hola@domogt.com');
-    }
+      alert('Error al enviar: ' + (err.message || String(err)) + '\n\nEscríbenos a hola@domogt.com');
+    });
   });
 </script>
 
