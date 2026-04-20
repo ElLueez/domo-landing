@@ -578,12 +578,15 @@
         document.getElementById('sociosForm').style.display = 'none';
         document.getElementById('successState').style.display = 'block';
       } else {
-        throw new Error();
+        const errorBody = await res.text();
+        throw new Error('HTTP ' + res.status + ': ' + errorBody);
       }
-    } catch {
+    } catch (err) {
       btn.disabled = false;
       btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar solicitud';
-      alert('Error al enviar. Por favor intenta de nuevo o escríbenos a hola@domogt.com');
+      alert('Error al enviar: ' + (err.message || String(err)) + '
+
+Escríbenos a hola@domogt.com');
     }
   });
 </script>
