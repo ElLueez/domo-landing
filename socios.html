@@ -412,7 +412,7 @@
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
     <span>Volver al inicio</span>
   </a>
-  <a href="https://app.domogt.com/auth" class="nav-cta">Iniciar sesión</a>
+  <a href="https://app.domogt.com/socios/auth" class="nav-cta">Partners Hub</a>
 </nav>
 
 <main>
@@ -555,7 +555,7 @@
     const formData = new FormData(this);
     const payload = {
       nombre: formData.get('nombre'),
-      telefono: formData.get('telefono'),
+      telefono: formData.get('telefono') || null,
       correo: formData.get('correo'),
       rol: formData.get('rol') || null,
       comunidades: formData.get('comunidades') || null,
