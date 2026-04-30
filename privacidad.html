@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/DomoLogoFavicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política de Privacidad — Domo</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f0e;
+    --surface: #161714;
+    --surface2: #1e1f1c;
+    --border: #2a2b28;
+    --text: #f2f0eb;
+    --muted: #8a8b85;
+    --teal: #a3d5d0;
+    --teal-dim: #4a9e98;
+    --teal-glow: rgba(163, 213, 208, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(14,15,14,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--teal);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .nav-back {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--text); }
+  .nav-back svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 9rem 2rem 6rem;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    margin-bottom: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.375rem 1rem;
+    font-size: 0.75rem;
+    color: var(--teal);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .page-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+
+  .page-meta {
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  /* ── CONTENT ── */
+  .section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section-number {
+    font-size: 0.75rem;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+  }
+
+  .section h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .section p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+    font-size: 0.9375rem;
+    line-height: 1.75;
+  }
+
+  .section p:last-child { margin-bottom: 0; }
+
+  .section ul {
+    list-style: none;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .section ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+  }
+
+  .section ul li::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--teal);
+    flex-shrink: 0;
+    margin-top: 0.6rem;
+  }
+
+  .section a {
+    color: var(--teal);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .section a:hover { border-bottom-color: var(--teal); }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--teal);
+    border-radius: 0 8px 8px 0;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .highlight-box p {
+    color: var(--text);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 3.5rem 0;
+  }
+
+  /* ── THIRD PARTIES TABLE ── */
+  .third-party-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  .third-party-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+  }
+
+  .third-party-name {
+    font-weight: 500;
+    color: var(--text);
+    font-size: 0.875rem;
+    min-width: 140px;
+    flex-shrink: 0;
+  }
+
+  .third-party-desc {
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  /* ── CONTACT BOX ── */
+  .contact-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .contact-box p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    text-align: center;
+  }
+
+  .contact-box a {
+    color: var(--teal);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 3rem 2.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-text { color: var(--muted); font-size: 0.8rem; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    main { padding: 7rem 1.25rem 4rem; }
+    footer { flex-direction: column; text-align: center; }
+    .third-party-item { flex-direction: column; gap: 0.375rem; }
+    .third-party-name { min-width: unset; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">domo</a>
+  <a href="/" class="nav-back">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Volver al inicio
+  </a>
+</nav>
+
+<main>
+
+  <div class="page-header">
+    <div class="page-label">Legal</div>
+    <h1 class="page-title">Política de<br>Privacidad</h1>
+    <p class="page-meta">
+      Domo — Tu comunidad, en un solo lugar<br>
+      Última actualización: abril de 2026
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-number">Introducción</div>
+    <h2>Tu privacidad nos importa</h2>
+    <p>Esta política de privacidad describe cómo Domo recopila, usa, almacena y protege la información personal de los usuarios de nuestra plataforma de gestión comunitaria. Al usar Domo, aceptás los términos descritos en este documento.</p>
+    <p>Si tenés preguntas, podés escribirnos a <a href="mailto:hola@domogt.com">hola@domogt.com</a> en cualquier momento.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <div class="section-number">01</div>
+    <h2>Quién es responsable de tus datos</h2>
+    <p>Domo es operado por Luis Valenzuela, con sede en Guatemala. Para cualquier consulta relacionada con la privacidad y el tratamiento de tus datos personales, podés contactarnos en:</p>
+    <div class="highlight-box">
+      <p><strong>Domo</strong> · Guatemala City, Guatemala<br>
+      Correo: <a href="mailto:hola@domogt.com">hola@domogt.com</a><br>
+      Sitio web: <a href="https://domogt.com">domogt.com</a></p>
+    </div>
+    <p>Esta información será actualizada cuando se formalice la entidad legal de Domo.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <div class="section-number">02</div>
+    <h2>Qué datos recopilamos</h2>
+    <p>Recopilamos únicamente la información necesaria para prestarte el servicio:</p>
+    <ul>
+      <li><strong>Datos de cuenta:</strong> nombre completo, dirección de correo electrónico y número de teléfono, proporcionados al registrarte o al ser invitado a una comunidad.</li>
+      <li><strong>Datos de identidad:</strong> número de DPI (Documento Personal de Identificación guatemalteco). Las imágenes del DPI que subís durante el proceso de verificación son procesadas para extraer tu número de identificación y luego eliminadas automáticamente. Solo conservamos los últimos 4 dígitos de tu número de DPI como referencia verificada.</li>
+      <li><strong>Datos de la comunidad:</strong> información relacionada con tu residencial, como nombre, dirección, número de unidades, anuncios, tickets de mantenimiento y registros financieros ingresados por la junta directiva.</li>
+      <li><strong>Datos de Google:</strong> si iniciás sesión con Google, recibimos tu nombre y correo electrónico desde tu cuenta de Google, conforme a los permisos que otorgás.</li>
+      <li><strong>Datos de uso:</strong> información sobre cómo usás la plataforma, como páginas visitadas y acciones realizadas, con fines de mejora del servicio.</li>
+    </ul>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <div class="section-number">03</div>
+    <h2>Para qué usamos tus datos</h2>
+    <ul>
+      <li>Proveer la plataforma de gestión comunitaria y sus funciones (anuncios, cobros, tickets, finanzas, directorio).</li>
+      <li>Verificar tu identidad como residente de una comunidad mediante tu DPI.</li>
+      <li>Enviarte notificaciones relevantes de tu comunidad por correo electrónico.</li>
+      <li>Responder consultas y brindarte soporte.</li>
+      <li>Mejorar el funcionamiento y la experiencia de la plataforma.</li>
+    </ul>
+    <p>No usamos tus datos para publicidad ni los vendemos a terceros bajo ninguna circunstancia.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <div class="section-number">04</div>
+    <h2>Con quién compartimos tus datos</h2>
+    <p>Domo trabaja con los siguientes proveedores de servicios, con quienes compartimos datos únicamente en la medida necesaria para operar la plataforma:</p>
+
+    <div class="third-party-list">
+      <div class="third-party-item">
+        <div class="third-party-name">Supabase</div>
+        <div class="third-party-desc">Base de datos y almacenamiento de archivos. Todos los datos de usuarios y comunidades se almacenan en servidores seguros gestionados por Supabase.</div>
+      </div>
+      <div class="third-party-item">
+        <div class="third-party-name">Google Cloud Vision</div>
+        <div class="third-party-desc">API de reconocimiento óptico de caracteres (OCR) utilizada para leer y extraer el número de DPI de las imágenes subidas durante el onboarding. Las imágenes se envían a través de una URL temporal de acceso limitado (5 minutos) y se eliminan del sistema una vez completada la verificación.</div>
+      </div>
+      <div class="third-party-item">
+        <div class="third-party-name">Resend</div>
+        <div class="third-party-desc">Servicio de entrega de correos electrónicos transaccionales, utilizado para enviar notificaciones de la plataforma, invitaciones y comunicaciones del equipo de Domo.</div>
+      </div>
+      <div class="third-party-item">
+        <div class="third-party-name">Google OAuth</div>
+        <div class="third-party-desc">Servicio de autenticación que permite iniciar sesión con tu cuenta de Google. Solo accedemos a tu nombre y correo electrónico.</div>
+      </div>
+    </div>
+
+    <p>Ninguno de estos proveedores tiene autorización para usar tus datos con fines propios o comerciales.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <div class="section-number">05</div>
+    <h2>Verificación de identidad y datos del DPI</h2>
+    <p>La verificación de identidad es un paso obligatorio para acceder a cualquier comunidad en Domo. Durante este proceso:</p>
+    <ul>
+      <li>Subís una foto del frente y reverso de tu DPI guatemalteco.</li>
+      <li>Las imágenes se transmiten de forma segura a Google Cloud Vision API mediante una URL de acceso temporal (válida por 5 minutos).</li>
+      <li>Una vez que el sistema extrae y verifica tu número de DPI, las imágenes son eliminadas permanentemente de nuestros servidores.</li>
+      <li>Solo conservamos los últimos 4 dígitos de tu número de DPI como referencia de verificación. Este dato es inmutable una vez verificado.</li>
+    </ul>
+    <div class="highlight-box">
+      <p>Domo no almacena imágenes de documentos de identidad. Las fotos de tu DPI son procesadas y eliminadas automáticamente. Nunca son revisadas por personas.</p>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <div class="section-number">06</div>
+    <h2>Por cuánto tiempo conservamos tus datos</h2>
+    <p>Conservamos tus datos mientras tu cuenta esté activa o mientras la comunidad a la que pertenecés siga usando la plataforma. Si una comunidad deja de usar Domo, sus datos se conservan durante 90 días adicionales antes de ser eliminados, salvo que exista una razón legal para conservarlos por más tiempo.</p>
+    <p>Podés solicitar la eliminación de tus datos en cualquier momento escribiéndonos a <a href="mailto:hola@domogt.com">hola@domogt.com</a>.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <div class="section-number">07</div>
+    <h2>Tus derechos</h2>
+    <p>De acuerdo con la Ley de Acceso a la Información Pública de Guatemala (Decreto 57-2008) y como práctica general de privacidad, tenés derecho a:</p>
+    <ul>
+      <li>Acceder a los datos personales que tenemos sobre vos.</li>
+      <li>Solicitar la corrección de datos incorrectos o desactualizados.</li>
+      <li>Solicitar la eliminación de tus datos personales.</li>
+      <li>Retirar tu consentimiento para el tratamiento de tus datos en cualquier momento.</li>
+    </ul>
+    <p>Para ejercer cualquiera de estos derechos, escribinos a <a href="mailto:hola@domogt.com">hola@domogt.com</a> con el asunto "Solicitud de privacidad".</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <div class="section-number">08</div>
+    <h2>Cookies y rastreo</h2>
+    <p>Domo utiliza cookies de sesión estrictamente necesarias para mantener tu sesión iniciada mientras usás la plataforma. No utilizamos cookies con fines publicitarios ni de rastreo de comportamiento entre sitios.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <div class="section-number">09</div>
+    <h2>Cambios a esta política</h2>
+    <p>Podemos actualizar esta política de privacidad cuando sea necesario. Si realizamos cambios significativos, te notificaremos por correo electrónico o mediante un aviso visible en la plataforma. La fecha de la última actualización siempre estará indicada al inicio de este documento.</p>
+    <p>Te recomendamos revisarla periódicamente.</p>
+  </div>
+
+  <div class="contact-box">
+    <p>¿Preguntas sobre tu privacidad?</p>
+    <a href="mailto:hola@domogt.com">hola@domogt.com</a>
+  </div>
+
+</main>
+
+<footer>
+  <a href="/"><img src="/DomoLogoTransparent.png" alt="domo" style="height:22px;display:block;"></a>
+  <div class="footer-text">Tu comunidad, en un solo lugar · Guatemala, 2026</div>
+  <div class="footer-text">
+    <a href="mailto:hola@domogt.com" style="color: var(--teal); text-decoration: none;">hola@domogt.com</a>
+    &nbsp;·&nbsp;
+    <a href="/privacidad" style="color: var(--muted); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--muted)'">Privacidad</a>
+  </div>
+</footer>
+
+</body>
+</html>
